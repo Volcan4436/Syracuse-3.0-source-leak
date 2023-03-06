@@ -20,41 +20,39 @@ public class Triggerbot extends Module {
         super("Triggerbot", "description", Category.COMBAT);
     }
 
-    private long windowHandle;
-
     private Entity target;
     @Override
     public void onTick() {
         target = null;
+//        Robot robot = null;
+//        try {
+//            robot = new Robot();
+//        } catch (AWTException e) {
+//            throw new RuntimeException(e);
+//        }
+
         if(mc.player.isBlocking()) return;
         if(mc.player.isUsingItem()) return;
-        if(mc.currentScreen instanceof HandledScreen<?>) return;
+        if(mc.currentScreen instanceof HandledScreen) return;
         if (!mc.player.isOnGround()) {
             if (mc.player.getHealth() <= 0.0f || mc.player.getAttackCooldownProgress(0.5f) < 0.95f) return;
             if (!(mc.targetedEntity instanceof LivingEntity)) return;
             if (((LivingEntity) mc.targetedEntity).getHealth() <= 0.0f) return;
-
             target = mc.targetedEntity;
 
-            GLFW.glfwSetMouseButtonCallback(windowHandle, (handle, button, action, mods) -> {
-                if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && action == GLFW.GLFW_PRESS) {
-                    GLFW.glfwSetMouseButtonCallback(windowHandle, null);
-                }
-            });
-            GLFW.glfwSetMouseButtonCallback(windowHandle, (handle, button, action, mods) -> {});
+            attack(target);
         } else {
             if (mc.player.getHealth() <= 0.0f || mc.player.getAttackCooldownProgress(0.5f) < 0.92f) return;
             if (!(mc.targetedEntity instanceof LivingEntity)) return;
             if (((LivingEntity) mc.targetedEntity).getHealth() <= 0.0f) return;
-
             target = mc.targetedEntity;
-            GLFW.glfwSetMouseButtonCallback(windowHandle, (handle, button, action, mods) -> {
-                if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && action == GLFW.GLFW_PRESS) {
-                    GLFW.glfwSetMouseButtonCallback(windowHandle, null);
-                }
-            });
-            GLFW.glfwSetMouseButtonCallback(windowHandle, (handle, button, action, mods) -> {});
 
+            attack(target);
         }
+    }
+
+    private void attack(Entity entity) {
+        mc.interactionManager.attackEntity(mc.player, entity);
+        mc.player.swingHand(Hand.MAIN_HAND);
     }
 }
