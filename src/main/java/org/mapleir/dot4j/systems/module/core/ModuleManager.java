@@ -3,10 +3,7 @@ package org.mapleir.dot4j.systems.module.core;
 import org.mapleir.dot4j.event.interfaces.Subscriptions;
 import org.mapleir.dot4j.event.interfaces.impl.ISubscription;
 import org.mapleir.dot4j.systems.module.impl.client.Arraylist;
-import org.mapleir.dot4j.systems.module.impl.combat.AimAssist;
-import org.mapleir.dot4j.systems.module.impl.combat.Hitboxes;
-import org.mapleir.dot4j.systems.module.impl.combat.InfiniteReach;
-import org.mapleir.dot4j.systems.module.impl.combat.Triggerbot;
+import org.mapleir.dot4j.systems.module.impl.combat.*;
 import org.mapleir.dot4j.systems.module.impl.misc.Plugins;
 import org.mapleir.dot4j.systems.module.impl.movement.Fly;
 import org.mapleir.dot4j.systems.module.impl.movement.VulcanHopTest;
@@ -34,6 +31,7 @@ public class ModuleManager {
         add(new VulcanHopTest());
         add(new Fly());
         add(new Triggerbot());
+        add(new Reach());
         add(new ESP());
     }
 
