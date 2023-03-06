@@ -7,6 +7,7 @@ import org.mapleir.dot4j.systems.module.core.Module;
 import org.mapleir.dot4j.gui.setting.BooleanSetting;
 import org.mapleir.dot4j.gui.setting.ModeSetting;
 import org.mapleir.dot4j.gui.setting.NumberSetting;
+@Module.Info(name = "Fly", description = "Makes you fly!", category = Category.MOVEMENT)
 
 public class Fly extends Module {
 
@@ -15,7 +16,6 @@ public class Fly extends Module {
     BooleanSetting warn = new BooleanSetting("Warn", true);
 
     public Fly() {
-        super("Fly", "Makes you fly!", Category.MOVEMENT);
         addSettings(modeSetting, speed, warn);
     }
 

@@ -22,6 +22,7 @@ import org.mapleir.dot4j.systems.module.core.Module;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
+@Module.Info(name = "AimAssist", description = "swag", category = Category.COMBAT)
 
 public class AimAssist extends Module implements ISubWorldRenderEnd {
     public NumberSetting distance = new NumberSetting("Distance", 3, 10, 6, 0.1);
@@ -31,8 +32,8 @@ public class AimAssist extends Module implements ISubWorldRenderEnd {
     public BooleanSetting yawAssist = new BooleanSetting("Vertical", true);
     public BooleanSetting pitchAssist = new BooleanSetting("Horizontal", false);
 
+
     public AimAssist() {
-        super("AimAssist", "swag", Category.COMBAT);
         addSettings(distance, strength, seeOnly, yawAssist, pitchAssist);
     }
 

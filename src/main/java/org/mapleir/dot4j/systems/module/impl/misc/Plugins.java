@@ -12,12 +12,9 @@ import net.minecraft.network.packet.s2c.play.CommandSuggestionsS2CPacket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+@Module.Info(name = "Plugins", description = "Get the plugins on the server", category = Category.MISC)
 
 public class Plugins extends Module {
-
-    public Plugins() {
-        super("Plugins", "Get the plugins on the server", Category.MISC);
-    }
 
     @Override
     public void onEnable() {

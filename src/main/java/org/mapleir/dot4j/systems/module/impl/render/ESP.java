@@ -23,6 +23,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.awt.*;
 
+@Module.Info(name = "ESP", description = "Highlights enemies", category = Category.RENDER)
 
 public class ESP extends Module {
 
@@ -32,7 +33,6 @@ public class ESP extends Module {
     public BooleanSetting invisibles = new BooleanSetting("Invisibles", true);
 
      public ESP() {
-        super("ESP", "Lets you see through walls", Category.RENDER);
          addSettings(players, monsters, passives, invisibles);
     }
 

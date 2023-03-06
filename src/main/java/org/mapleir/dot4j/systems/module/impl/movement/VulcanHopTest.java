@@ -4,11 +4,9 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
+@Module.Info(name = "VulcanHopTest", description = "vulcan hop omg", category = Category.MOVEMENT)
 
 public class VulcanHopTest extends Module {
-    public VulcanHopTest() {
-        super("VulcanHopTest", "vulcan hop omg", Category.MOVEMENT);
-    }
 
     private int jumpTicks = 0;
 

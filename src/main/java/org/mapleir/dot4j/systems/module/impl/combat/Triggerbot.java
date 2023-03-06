@@ -14,11 +14,9 @@ import org.mapleir.dot4j.systems.module.core.Module;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
+@Module.Info(name = "Triggerbot", description = "umm", category = Category.COMBAT)
 
 public class Triggerbot extends Module {
-    public Triggerbot() {
-        super("Triggerbot", "description", Category.COMBAT);
-    }
 
     private Entity target;
     @Override

@@ -21,13 +21,12 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.function.Predicate;
+@Module.Info(name = "InfiniteReach", description = "Up to 100 blocks of reach", category = Category.COMBAT)
 
 public class InfiniteReach extends Module {
-
     private final NumberSetting maxDistance = new NumberSetting("Amount", 1, 100, 10, 1);
 
     public InfiniteReach() {
-        super("InfiniteReach", "Up to 100 blocks of reach", Category.COMBAT);
         addSettings(maxDistance);
     }
 
