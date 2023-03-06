@@ -11,6 +11,7 @@
     "InGameHudMixin",
     "KeyboardMixin",
     "EntityMixin",
+    "ClientPlayerInteractionManagerMixin",
     "WorldRendererMixin",
     "MinecraftClientMixin"
   ],
