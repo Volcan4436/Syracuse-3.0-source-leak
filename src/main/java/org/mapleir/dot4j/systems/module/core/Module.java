@@ -11,10 +11,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import org.mapleir.dot4j.systems.module.core.Category;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,37 +37,25 @@ public abstract class Module {
     private final List<Setting> settings = new ArrayList<>();
 
     public Module() {
-//        for (Field field : getClass().getDeclaredFields()) {
-//            if (NumberSetting.class.isAssignableFrom(field.getType())) {
-//                try {
-//                    settings.add((NumberSetting) field.get(this));
-//                } catch (IllegalAccessException e) {
-//                    e.printStackTrace();
-//                }
-//            } else if (BooleanSetting.class.isAssignableFrom(field.getType())) {
-//                try {
-//                    settings.add((BooleanSetting) field.get(this));
-//                } catch (IllegalAccessException e) {
-//                    e.printStackTrace();
-//                }
-//            } else if (ModeSetting.class.isAssignableFrom(field.getType())) {
-//                try {
-//                    settings.add((ModeSetting) field.get(this));
-//                } catch (IllegalAccessException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//
-//        for (Setting setting : settings) {
-//            addSettings(setting);
-//        }
         Info info = getClass().getAnnotation(Info.class);
         if (info != null) {
             this.name = info.name();
             this.description = info.description();
             this.category = info.category();
             this.displayName = name;
+        }
+
+        Field[] fields = getClass().getDeclaredFields();
+        for (Field field : fields) {
+            if (Setting.class.isAssignableFrom(field.getType())) {
+                try {
+                    field.setAccessible(true);
+                    Setting setting = (Setting) field.get(this);
+                    settings.add(setting);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
     public void toggle() {
@@ -82,6 +67,25 @@ public abstract class Module {
        else {
            onDisable();
        }
+    }
+
+
+    protected BooleanSetting registerBoolean(String name, boolean defaultValue) {
+        BooleanSetting setting = new BooleanSetting(name, defaultValue);
+        settings.add(setting);
+        return setting;
+    }
+
+    protected NumberSetting registerNumber(String name, int defaultValue, int minValue, int maxValue, int increment) {
+        NumberSetting setting = new NumberSetting(name, minValue, maxValue, defaultValue, increment);
+        settings.add(setting);
+        return setting;
+    }
+
+    protected ModeSetting registerMode(String name, List<String> modes, String defaultValue) {
+        ModeSetting setting = new ModeSetting(name, defaultValue, String.valueOf(modes));
+        settings.add(setting);
+        return setting;
     }
 
     public List<Setting> getSettings() {

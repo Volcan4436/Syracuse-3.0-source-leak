@@ -5,7 +5,10 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
@@ -13,6 +16,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+
+import static org.mapleir.dot4j.helper.utils.PacketHelper.mc;
 
 public class RenderUtils {
 
@@ -55,6 +60,14 @@ public class RenderUtils {
 
         fill(matrixStack, x, y, x + width, y - thickness, color);
         fill(matrixStack, x, y + height, x + width, y + height + thickness, color);
+    }
+
+    public static Vec3d getCameraPos() {
+        return mc.getBlockEntityRenderDispatcher().camera.getPos();
+    }
+
+    public static BlockPos getCameraBlockPos() {
+        return mc.getBlockEntityRenderDispatcher().camera.getBlockPos();
     }
 
     // from coffee client

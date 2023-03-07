@@ -27,6 +27,7 @@ public class ModuleManager {
         add(new InfiniteReach());
         add(new AimAssist());
         add(new Plugins());
+        add(new AutoStun());
         add(new Hitboxes());
         add(new VulcanHopTest());
         add(new Fly());

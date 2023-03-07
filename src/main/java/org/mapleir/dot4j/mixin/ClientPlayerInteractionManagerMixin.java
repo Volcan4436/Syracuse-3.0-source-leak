@@ -13,7 +13,7 @@ public class ClientPlayerInteractionManagerMixin {
     @Inject(method = "getReachDistance", at = @At("HEAD"), cancellable = true)
     public void getReachDistance(CallbackInfoReturnable<Float> cir) {
         if(ModuleManager.INSTANCE.getModuleByClass(Reach.class).isEnabled()) {
-            cir.setReturnValue(((Reach) ModuleManager.INSTANCE.getModuleByClass(Reach.class)).size.getFloatValue());
+            cir.setReturnValue(((Reach) ModuleManager.INSTANCE.getModuleByClass(Reach.class)).areac.getFloatValue());
         }
     }
 
