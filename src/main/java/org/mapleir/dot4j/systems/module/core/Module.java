@@ -44,19 +44,6 @@ public abstract class Module {
             this.category = info.category();
             this.displayName = name;
         }
-
-        Field[] fields = getClass().getDeclaredFields();
-        for (Field field : fields) {
-            if (Setting.class.isAssignableFrom(field.getType())) {
-                try {
-                    field.setAccessible(true);
-                    Setting setting = (Setting) field.get(this);
-                    settings.add(setting);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
     public void toggle() {
        this.enabled = !this.enabled;
