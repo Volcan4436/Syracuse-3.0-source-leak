@@ -14,4 +14,5 @@ public class Reach extends Module {
     }
 
     // handled in ClientPlayerInteractionManagerMixin
+    //here too, should make additional checks
 }

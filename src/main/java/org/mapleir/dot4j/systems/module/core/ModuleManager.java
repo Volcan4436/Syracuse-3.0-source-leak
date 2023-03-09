@@ -23,17 +23,26 @@ public class ModuleManager {
     }
 
     private void init() {
+
+        // RENDER MODULES:
         add(new Arraylist());
+        add(new ESP());
+
+        // COMBAT MODULES
         add(new InfiniteReach());
         add(new AimAssist());
-        add(new Plugins());
         add(new AutoStun());
         add(new Hitboxes());
-        add(new VulcanHopTest());
-        add(new Fly());
         add(new Triggerbot());
         add(new Reach());
-        add(new ESP());
+
+        // MOVEMENT MODULES
+        add(new VulcanHopTest());
+        add(new Fly());
+
+        // MISC MODULES
+        add(new Plugins());
+
     }
 
     public void add(Module m) {

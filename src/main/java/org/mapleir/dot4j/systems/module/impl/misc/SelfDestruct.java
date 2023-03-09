@@ -16,7 +16,7 @@ public class SelfDestruct extends Module {
 
     @Override
     public void onEnable() {
-        // tm
+        // TODO: add self destruct
     }
 }
 

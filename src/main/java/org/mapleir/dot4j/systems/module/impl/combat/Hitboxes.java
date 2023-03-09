@@ -15,4 +15,5 @@ public class Hitboxes extends Module {
 
 
     // handled in EntityMixin
+    //retarded implementation, you should make some other checks and not expand the hitboxes 100% of the time
 }

@@ -33,7 +33,7 @@ public class Fly extends Module {
             sendMsg("&7Warning: You can still take fall damage!");
         }
         if(mc.player == null) return;
-        mc.player.getAbilities().allowFlying = true;
+        //mc.player.getAbilities().allowFlying = true;
     }
 
     @Override

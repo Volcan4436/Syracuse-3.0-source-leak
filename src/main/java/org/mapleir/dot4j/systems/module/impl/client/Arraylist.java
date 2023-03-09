@@ -47,7 +47,6 @@ public class Arraylist extends Module {
             int fWidth = mc.textRenderer.getWidth(mod.getDisplayName());
             int lastWidth;
             int fHeight = mc.textRenderer.fontHeight;
-            // big black juicy dudes are oily
             int fromX = sWidth - fWidth - 5;
             int fromY = (fHeight - 1) * (index) + 1;
             int toX = sWidth - 2;

@@ -31,7 +31,7 @@ public class InfiniteReach extends Module {
     }
 
     @EventTarget
-    public void onUpdate(EventUpdate e) {
+    public void onUpdate(final EventUpdate e) {
         if(mc.options.useKey.wasPressed()) {
 
             BlockHitResult hit = getTargetBlock((int) maxDistance.getValue());
@@ -61,7 +61,7 @@ public class InfiniteReach extends Module {
     }
 
     @EventTarget
-    public void onSwing(HandSwingEvent e) {
+    public void onSwing(final HandSwingEvent e) {
         if(mc.options.attackKey.isPressed()) {
             Entity target = getTarget((int) maxDistance.getValue());
 
