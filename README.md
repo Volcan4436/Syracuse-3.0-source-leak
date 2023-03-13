@@ -1,4 +1,4 @@
-# Syracuse-v2.30
+# Syracuse-v3.0
 
 a 1.19.3 mixin-based UTILITY MOD for minecraft 1.19.3 using fabric.
 
