@@ -58,35 +58,21 @@ public class Arraylist extends Module {
             DrawableHelper.fill(matrices, fromX + xOffset, fromY + 1 + yOffset, sWidth + xOffset, toY + 1 + yOffset, 0x60000000);
 
 
-            DrawableHelper.fill(matrices, fromX + xOffset, fromY + 1 + yOffset, fromX - 1 + xOffset, toY + 1 + yOffset, astolfoColors(1, 4, index * 150));
-            DrawableHelper.fill(matrices, toX + 2 + xOffset, fromY + 1 + yOffset, toX + 1 + xOffset, toY + 1 + yOffset, astolfoColors(1, 4, index * 150));
+            DrawableHelper.fill(matrices, fromX + xOffset, fromY + 1 + yOffset, fromX - 1 + xOffset, toY + 1 + yOffset, -1);
+            DrawableHelper.fill(matrices, toX + 2 + xOffset, fromY + 1 + yOffset, toX + 1 + xOffset, toY + 1 + yOffset, -1);
 
             if (index == enabled.size() - 1) {
-                DrawableHelper.fill(matrices, fromX + xOffset, toY + yOffset, sWidth + xOffset, toY + 1 + yOffset, astolfoColors(1, 4, index * 150));
+                DrawableHelper.fill(matrices, fromX + xOffset, toY + yOffset, sWidth + xOffset, toY + 1 + yOffset, -1);
             }
             if (index == enabled.size() - enabled.size()) {
-                DrawableHelper.fill(matrices, fromX - 1 + xOffset, fromY + yOffset, sWidth + xOffset, fromY + 1 + yOffset, astolfoColors(1, 4, index * 150));
+                DrawableHelper.fill(matrices, fromX - 1 + xOffset, fromY + yOffset, sWidth + xOffset, fromY + 1 + yOffset, -1);
             } else {
-                DrawableHelper.fill(matrices, fromX + xOffset, fromY + yOffset, toX - lastWidth - 4 + xOffset, fromY + 1 + yOffset, astolfoColors(1, 4, index * 150));
+                DrawableHelper.fill(matrices, fromX + xOffset, fromY + yOffset, toX - lastWidth - 4 + xOffset, fromY + 1 + yOffset, -1);
             }
 
-            mc.textRenderer.drawWithShadow(matrices, mod.getDisplayName(), sWidth - fWidth + xOffset, (fHeight - 1) * (index) + yOffset, astolfoColors(1, 3, index * 150));
+            mc.textRenderer.drawWithShadow(matrices, mod.getDisplayName(), sWidth - fWidth + xOffset, (fHeight - 1) * (index) + yOffset, -1);
             index++;
         }
-    }
-
-    public static int astolfoColors(int yOffset, int yTotal, long index) {
-        float speed = (float) 40;
-        float hue = (float) ((System.currentTimeMillis() + index) % (int) speed) + ((yTotal - yOffset) * 9);
-        while (hue > speed) {
-            hue -= speed;
-        }
-        hue /= speed;
-        if (hue > 0.5) {
-            hue = (0.5f - (hue - 0.5f));
-        }
-        hue += 0.5;
-            return Color.HSBtoRGB(hue, 0.4f, 1f);
     }
 }
 

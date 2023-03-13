@@ -1,5 +1,9 @@
 package org.mapleir.dot4j.systems.module.impl.movement;
 
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Items;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import org.mapleir.dot4j.event.EventTarget;
 import org.mapleir.dot4j.event.impl.EventUpdate;
 import org.mapleir.dot4j.systems.module.core.Category;
@@ -7,23 +11,59 @@ import org.mapleir.dot4j.systems.module.core.Module;
 import org.mapleir.dot4j.gui.setting.BooleanSetting;
 import org.mapleir.dot4j.gui.setting.ModeSetting;
 import org.mapleir.dot4j.gui.setting.NumberSetting;
+import org.mapleir.dot4j.systems.module.core.ModuleManager;
+import org.mapleir.dot4j.systems.module.impl.player.NoSlow;
+
 @Module.Info(name = "Fly", description = "Makes you fly!", category = Category.MOVEMENT)
 
 public class Fly extends Module {
 
-    ModeSetting modeSetting = new ModeSetting("Mode", "Vanilla", "Vanilla", "Hypixel", "Vulcan");
+    ModeSetting modeSetting = new ModeSetting("Mode", "Vanilla", "Vanilla", "Hypixel", "Vulcan", "Elytra");
     NumberSetting speed = new NumberSetting("Speed", 0.01, 1, 0.2, 0.01);
     BooleanSetting warn = new BooleanSetting("Warn", true);
-
     public Fly() {
         addSettings(modeSetting, speed, warn);
     }
 
+
     @EventTarget
     public void onUpdate(EventUpdate e) {
         if(mc.player == null) return;
-        mc.player.getAbilities().flying = true;
-        mc.player.getAbilities().setFlySpeed(speed.getFloatValue());
+        if (mc.player.isDead()) return;
+        if (modeSetting.isMode("Vanilla")) {
+            mc.player.getAbilities().flying = true;
+            mc.player.getAbilities().setFlySpeed(speed.getFloatValue());
+        } else if (modeSetting.isMode("Elytra") && wearingElytra(mc.player.getInventory())) {
+
+            if (mc.player.isFallFlying()) {
+                mc.player.setVelocity(0,0,0);
+                return;
+            }
+                Vec3d antiKickVel = Vec3d.ZERO;
+
+                if (mc.player.age % 20 == 0
+                        && mc.world.getBlockState(new BlockPos(new BlockPos(mc.player.getPos().add(0, -0.069, 0)))).getMaterial().isReplaceable()) {
+                    antiKickVel = antiKickVel.add(0, -0.069, 0);
+                }
+
+                mc.player.setVelocity(antiKickVel);
+
+                Vec3d forward = new Vec3d(0, 0, (speed.getFloatValue() * 5)).rotateY(-(float) Math.toRadians(mc.player.getYaw()));
+                Vec3d strafe = forward.rotateY((float) Math.toRadians(90));
+
+                if (mc.options.jumpKey.isPressed())
+                    mc.player.setVelocity(mc.player.getVelocity().add(0, (speed.getFloatValue() * 5), 0));
+                if (mc.options.sneakKey.isPressed())
+                    mc.player.setVelocity(mc.player.getVelocity().add(0, -(speed.getFloatValue() * 5), 0));
+                if (mc.options.backKey.isPressed())
+                    mc.player.setVelocity(mc.player.getVelocity().add(-forward.x, 0, -forward.z));
+                if (mc.options.forwardKey.isPressed())
+                    mc.player.setVelocity(mc.player.getVelocity().add(forward.x, 0, forward.z));
+                if (mc.options.leftKey.isPressed())
+                    mc.player.setVelocity(mc.player.getVelocity().add(strafe.x, 0, strafe.z));
+                if (mc.options.rightKey.isPressed())
+                    mc.player.setVelocity(mc.player.getVelocity().add(-strafe.x, 0, -strafe.z));
+        }
     }
 
     @Override
@@ -46,5 +86,11 @@ public class Fly extends Module {
             mc.player.getAbilities().flying = false;
         }
         mc.player.getAbilities().setFlySpeed(0.1f);
+    }
+
+    public static boolean wearingElytra(PlayerInventory inventory) {
+        int chestSlot = 2;
+        return (inventory.armor.get(chestSlot).getCount() == 1 &&
+                inventory.armor.get(chestSlot).getItem().asItem().equals(Items.ELYTRA));
     }
 }
