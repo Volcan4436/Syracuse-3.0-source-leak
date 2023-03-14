@@ -7,6 +7,7 @@ import org.mapleir.dot4j.systems.module.impl.combat.*;
 import org.mapleir.dot4j.systems.module.impl.misc.Plugins;
 import org.mapleir.dot4j.systems.module.impl.movement.Fly;
 import org.mapleir.dot4j.systems.module.impl.movement.VulcanHopTest;
+import org.mapleir.dot4j.systems.module.impl.player.NoFall;
 import org.mapleir.dot4j.systems.module.impl.player.NoSlow;
 import org.mapleir.dot4j.systems.module.impl.render.ESP;
 
@@ -46,6 +47,7 @@ public class ModuleManager {
 
         // PLAYER MODULES
         add(new NoSlow());
+        add(new NoFall());
 
     }
 

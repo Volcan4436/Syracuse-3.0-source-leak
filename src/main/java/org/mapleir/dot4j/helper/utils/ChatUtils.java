@@ -1,12 +1,14 @@
 package org.mapleir.dot4j.helper.utils;
 
 import org.mapleir.dot4j.ClientMain;
-import net.minecraft.client.MinecraftClient;
+import org.mapleir.dot4j.helper.utils.SyraMC;
 import net.minecraft.text.Text;
+
+import static org.mapleir.dot4j.helper.utils.SyraMC.mc;
 
 public class ChatUtils {
 
-    private MinecraftClient mc = MinecraftClient.getInstance();
+
 
     // unicode for §
     private final String paragraph = "\u00A7";
@@ -21,5 +23,9 @@ public class ChatUtils {
 
     public String translate(String text) {
         return text.replace("&", paragraph);
+    }
+
+    public static void addChatMessage(String message) {
+        mc.inGameHud.getChatHud().addMessage(Text.literal(message));
     }
 }

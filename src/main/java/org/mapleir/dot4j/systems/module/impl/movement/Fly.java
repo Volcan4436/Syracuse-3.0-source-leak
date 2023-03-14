@@ -6,6 +6,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.mapleir.dot4j.event.EventTarget;
 import org.mapleir.dot4j.event.impl.EventUpdate;
+import org.mapleir.dot4j.helper.utils.MoveHelper;
 import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
 import org.mapleir.dot4j.gui.setting.BooleanSetting;
@@ -19,10 +20,12 @@ import org.mapleir.dot4j.systems.module.impl.player.NoSlow;
 public class Fly extends Module {
 
     ModeSetting modeSetting = new ModeSetting("Mode", "Vanilla", "Vanilla", "Hypixel", "Vulcan", "Elytra");
-    NumberSetting speed = new NumberSetting("Speed", 0.01, 1, 0.2, 0.01);
+    NumberSetting speed = new NumberSetting("Speed", 0.01, 10, 0.2, 0.01);
     BooleanSetting warn = new BooleanSetting("Warn", true);
+    NumberSetting clip = new NumberSetting("Clip", 1, 100, 10, 1);
+    BooleanSetting Clip = new BooleanSetting("Clipping", true);
     public Fly() {
-        addSettings(modeSetting, speed, warn);
+        addSettings(modeSetting, clip, Clip, speed, warn);
     }
 
 
@@ -63,6 +66,24 @@ public class Fly extends Module {
                     mc.player.setVelocity(mc.player.getVelocity().add(strafe.x, 0, strafe.z));
                 if (mc.options.rightKey.isPressed())
                     mc.player.setVelocity(mc.player.getVelocity().add(-strafe.x, 0, -strafe.z));
+        }
+
+        if (modeSetting.isMode("Vulcan")) {
+
+            // IF DOESN'T BYPASS, REMOVE THE COMMENT HERE
+
+            //if (mc.player.fallDistance > 2) {
+            //    mc.player.setOnGround(true);
+            //    mc.player.fallDistance = 0f;
+            //}
+            if (mc.player.age % 3 == 0) {
+                MoveHelper.motionYPlus(0.026);
+            } else {
+                MoveHelper.motionY(-0.0991);
+            }
+            if (Clip.isEnabled() && mc.player.fallDistance >= clip.getValue()) {
+                mc.player.updatePosition(mc.player.getX(), mc.player.getY() + clip.getValue(), mc.player.getZ());
+            }
         }
     }
 

@@ -16,6 +16,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Module {
     @Retention(RetentionPolicy.RUNTIME)
@@ -35,6 +36,10 @@ public abstract class Module {
     protected static MinecraftClient mc = MinecraftClient.getInstance();
 
     private final List<Setting> settings = new ArrayList<>();
+
+    public boolean isNull() {
+        return Objects.isNull(mc.world) || Objects.isNull(mc.player) || Objects.isNull(mc.player);
+    }
 
     public Module() {
         Info info = getClass().getAnnotation(Info.class);
