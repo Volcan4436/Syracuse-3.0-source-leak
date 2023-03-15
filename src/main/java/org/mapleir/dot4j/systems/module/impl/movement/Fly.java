@@ -28,6 +28,34 @@ public class Fly extends Module {
         addSettings(modeSetting, clip, Clip, speed, warn);
     }
 
+    double startHeight;
+
+    @Override
+    public void onEnable() {
+        super.onEnable();
+        if(warn.isEnabled()) {
+            sendMsg("&7Warning: You can still take fall damage!");
+        }
+        if(mc.player == null) return;
+
+        //System.out.println(startHeight);
+       startHeight = mc.player.getY();
+        //mc.player.getAbilities().allowFlying = true;
+    }
+
+    @Override
+    public void onDisable() {
+        super.onDisable();
+
+        if(mc.player == null) return;
+        if(!mc.player.getAbilities().creativeMode) {
+            mc.player.getAbilities().allowFlying = false;
+            mc.player.getAbilities().flying = false;
+        }
+        mc.player.getAbilities().setFlySpeed(0.1f);
+    }
+
+
 
     @EventTarget
     public void onUpdate(EventUpdate e) {
@@ -70,44 +98,26 @@ public class Fly extends Module {
 
         if (modeSetting.isMode("Vulcan")) {
 
-            // IF DOESN'T BYPASS, REMOVE THE COMMENT HERE
+             double clipHeight = startHeight - clip.getValue();
+            //System.out.println("The Player Height is " + mc.player.getY() + "\n And the clip height is " + mc.player.getY());
 
-            //if (mc.player.fallDistance > 2) {
-            //    mc.player.setOnGround(true);
-            //    mc.player.fallDistance = 0f;
-            //}
+            if (mc.player.fallDistance > 2) {
+                mc.player.setOnGround(true);
+                mc.player.fallDistance = 0f;
+            }
             if (mc.player.age % 3 == 0) {
                 MoveHelper.motionYPlus(0.026);
             } else {
                 MoveHelper.motionY(-0.0991);
             }
-            if (Clip.isEnabled() && mc.player.fallDistance >= clip.getValue()) {
+            if (Clip.isEnabled() && clipHeight == mc.player.getY()) {
                 mc.player.updatePosition(mc.player.getX(), mc.player.getY() + clip.getValue(), mc.player.getZ());
             }
         }
     }
 
-    @Override
-    public void onEnable() {
-        super.onEnable();
-        if(warn.isEnabled()) {
-            sendMsg("&7Warning: You can still take fall damage!");
-        }
-        if(mc.player == null) return;
-        //mc.player.getAbilities().allowFlying = true;
-    }
 
-    @Override
-    public void onDisable() {
-        super.onDisable();
 
-        if(mc.player == null) return;
-        if(!mc.player.getAbilities().creativeMode) {
-            mc.player.getAbilities().allowFlying = false;
-            mc.player.getAbilities().flying = false;
-        }
-        mc.player.getAbilities().setFlySpeed(0.1f);
-    }
 
     public static boolean wearingElytra(PlayerInventory inventory) {
         int chestSlot = 2;
