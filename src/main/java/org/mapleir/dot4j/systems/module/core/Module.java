@@ -26,9 +26,7 @@ public abstract class Module {
         String description();
         Category category();
     }
-    private static String name;
-    private String description;
-    private String displayName;
+    private String name, description, displayName;
     private int key;
     private boolean enabled;
     private Category category;
@@ -109,7 +107,7 @@ public abstract class Module {
         }
     }
 
-    public static String getName() {
+    public String getName() {
         return name;
     }
 
@@ -129,8 +127,9 @@ public abstract class Module {
         return key;
     }
 
-    public static void setKey(int key) {}
-
+    public void setKey(int key) {
+        this.key = key;
+    }
     public boolean isEnabled() {
         return enabled;
     }
