@@ -7,12 +7,12 @@ import org.mapleir.dot4j.event.impl.MovementUtils;
 import org.mapleir.dot4j.gui.setting.ModeSetting;
 import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
-@Module.Info(name = "VulcanHopTest", description = "vulcan hop omg", category = Category.MOVEMENT)
+@Module.Info(name = "Speed", description = "Walk, but faster", category = Category.MOVEMENT)
 
-public class VulcanHopTest extends Module {
+public class Speed extends Module {
 
     ModeSetting modeSetting = new ModeSetting("Mode", "Vanilla", "Vanilla", "Vulcan");
-    public VulcanHopTest() {
+    public Speed() {
         addSettings(modeSetting);
     }
 

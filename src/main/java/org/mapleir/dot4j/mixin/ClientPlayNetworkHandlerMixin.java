@@ -1,6 +1,8 @@
 package org.mapleir.dot4j.mixin;
 
 import org.mapleir.dot4j.ClientMain;
+import org.mapleir.dot4j.command.Command;
+import org.mapleir.dot4j.command.CommandManager;
 import org.mapleir.dot4j.event.impl.CommandSuggestEvent;
 import org.mapleir.dot4j.event.impl.PacketSendEvent;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -23,5 +25,26 @@ public abstract class ClientPlayNetworkHandlerMixin {
     public void onSend(Packet<?> packet, CallbackInfo ci) {
         PacketSendEvent pse = new PacketSendEvent(packet);
         if(pse.isCancelled()) ci.cancel();
+    }
+
+    // TODO: make a randomized prefix and make the rnadomized string prefix thing in gui
+    @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
+    public void sendChatMessage(String msg, CallbackInfo ci) {
+
+        StringBuilder CMD = new StringBuilder();
+        for (int i = 1; i < msg.toCharArray().length; ++i) {
+            CMD.append(msg.toCharArray()[i]);
+        }
+        String[] args = CMD.toString().split(" ");
+
+        if(msg.startsWith(ClientMain.getCommandPrefix())) {
+            for(Command command : CommandManager.INSTANCE.getCmds()) {
+                if(args[0].equalsIgnoreCase(command.getName())) {
+                    command.onCmd(msg, args);
+                    ci.cancel();
+                    break;
+                }
+            }
+        }
     }
 }

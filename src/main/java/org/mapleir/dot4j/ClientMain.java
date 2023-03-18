@@ -20,6 +20,7 @@ public class ClientMain implements ModInitializer {
     private static final ClientMain INSTANCE = new ClientMain();
 
     private static final String name = "syracuse.vip";
+    private static final String commandPrefix = "#";
 
     public static Config selectedConfig;
 
@@ -76,6 +77,11 @@ public class ClientMain implements ModInitializer {
         if (mc.currentScreen == null) {
             if (action == GLFW.GLFW_PRESS) {
                 if (key == GLFW.GLFW_KEY_RIGHT_SHIFT) mc.setScreen(ClickGUI.getINSTANCE());
+                for(Module module : ModuleManager.INSTANCE.getModules()) {
+                    if(module.getKey() == key) {
+                        module.toggle();
+                    }
+                }
             }
         }
     }
@@ -94,5 +100,8 @@ public class ClientMain implements ModInitializer {
     // Getters
     public static String getName() {
         return name;
+    }
+    public static String getCommandPrefix() {
+        return commandPrefix;
     }
 }
