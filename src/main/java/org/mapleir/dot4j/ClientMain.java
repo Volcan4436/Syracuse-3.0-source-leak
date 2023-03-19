@@ -99,7 +99,7 @@ public class ClientMain implements ModInitializer {
         return INSTANCE;
     }
 
-    // Getters
+    // getters
     public static String getName() {
         return name;
     }
