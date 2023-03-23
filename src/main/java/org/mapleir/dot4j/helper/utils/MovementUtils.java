@@ -1,4 +1,4 @@
-package org.mapleir.dot4j.event.impl;
+package org.mapleir.dot4j.helper.utils;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.Vec3d;

@@ -3,12 +3,14 @@ package org.mapleir.dot4j.systems.module.core;
 import org.mapleir.dot4j.event.interfaces.Subscriptions;
 import org.mapleir.dot4j.event.interfaces.impl.ISubscription;
 import org.mapleir.dot4j.systems.module.impl.client.Arraylist;
+import org.mapleir.dot4j.systems.module.impl.client.HUD;
 import org.mapleir.dot4j.systems.module.impl.combat.*;
 import org.mapleir.dot4j.systems.module.impl.misc.Plugins;
 import org.mapleir.dot4j.systems.module.impl.movement.*;
 import org.mapleir.dot4j.systems.module.impl.player.NoFall;
 import org.mapleir.dot4j.systems.module.impl.player.NoSlow;
 import org.mapleir.dot4j.systems.module.impl.render.ESP;
+import org.mapleir.dot4j.systems.module.impl.render.Nametags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +30,12 @@ public class ModuleManager {
         // RENDER MODULES:
         add(new Arraylist());
         add(new ESP());
+        add(new Nametags());
+        add(new HUD());
 
         // COMBAT MODULES
         add(new InfiniteReach());
+        add(new AutoCrystal());
         add(new AimAssist());
         add(new AutoStun());
         add(new Hitboxes());

@@ -2,6 +2,7 @@ package org.mapleir.dot4j.systems.module.impl.client;
 
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
+import org.mapleir.dot4j.helper.utils.RenderUtils;
 import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
 import org.mapleir.dot4j.gui.setting.BooleanSetting;
