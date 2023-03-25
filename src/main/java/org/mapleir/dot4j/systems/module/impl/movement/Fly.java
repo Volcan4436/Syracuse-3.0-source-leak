@@ -19,7 +19,7 @@ import org.mapleir.dot4j.systems.module.impl.player.NoSlow;
 
 public class Fly extends Module {
 
-    ModeSetting modeSetting = new ModeSetting("Mode", "Vanilla", "Vanilla", "Hypixel", "Vulcan", "Elytra");
+    ModeSetting modeSetting = new ModeSetting("Mode", "Vanilla", "Vanilla", "Hypixel", "Vulcan", "Elytra", "Jetpack");
     NumberSetting speed = new NumberSetting("Speed", 0.01, 10, 0.2, 0.01);
     BooleanSetting warn = new BooleanSetting("Warn", true);
     NumberSetting clip = new NumberSetting("Clip", 1, 100, 10, 1);
@@ -112,6 +112,10 @@ public class Fly extends Module {
             }
             if (Clip.isEnabled() && clipHeight == mc.player.getY()) {
                 mc.player.updatePosition(mc.player.getX(), mc.player.getY() + clip.getValue(), mc.player.getZ());
+            }
+        } else if (modeSetting.isMode("Jetpack")) {
+            if (mc.options.jumpKey.isPressed()){
+                mc.player.jump();
             }
         }
     }

@@ -3,12 +3,14 @@ package org.mapleir.dot4j.systems.module.core;
 import org.mapleir.dot4j.event.interfaces.Subscriptions;
 import org.mapleir.dot4j.event.interfaces.impl.ISubscription;
 import org.mapleir.dot4j.systems.module.impl.client.Arraylist;
+import org.mapleir.dot4j.systems.module.impl.client.Spoofer;
 import org.mapleir.dot4j.systems.module.impl.combat.*;
 import org.mapleir.dot4j.systems.module.impl.misc.Plugins;
 import org.mapleir.dot4j.systems.module.impl.movement.*;
 import org.mapleir.dot4j.systems.module.impl.player.NoFall;
 import org.mapleir.dot4j.systems.module.impl.player.NoSlow;
 import org.mapleir.dot4j.systems.module.impl.render.ESP;
+import org.mapleir.dot4j.systems.module.impl.render.NoHurtCam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +27,13 @@ public class ModuleManager {
 
     private void init() {
 
-        // RENDER MODULES:
+        // CLIENT MODULES:
         add(new Arraylist());
+        add(new Spoofer());
+
+        // RENDER MODULES:
         add(new ESP());
+        add(new NoHurtCam());
 
         // COMBAT MODULES
         add(new InfiniteReach());
@@ -41,7 +47,6 @@ public class ModuleManager {
         add(new Speed());
         add(new AirJump());
         add(new InventoryMove());
-        add(new Jetpack());
         add(new Sprint());
         add(new Step());
         add(new Strafe());

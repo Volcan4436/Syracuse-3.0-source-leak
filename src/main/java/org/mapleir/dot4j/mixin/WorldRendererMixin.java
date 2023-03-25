@@ -2,9 +2,12 @@ package org.mapleir.dot4j.mixin;
 
 import org.mapleir.dot4j.systems.module.core.Module;
 import org.mapleir.dot4j.systems.module.core.ModuleManager;
+import org.mapleir.dot4j.systems.module.impl.combat.Reach;
+import org.mapleir.dot4j.systems.module.impl.render.NoHurtCam;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -20,5 +23,12 @@ public class WorldRendererMixin {
                 m.onWorldRender(matrices);
             }
         }
-    }   
+    }
+
+    @Inject(method = "bobViewWhenHurt", at = @At("HEAD"), cancellable = true)
+    public void disableHurtCam(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
+        if (ModuleManager.INSTANCE.getModuleByClass(NoHurtCam.class).isEnabled()) {
+            ci.cancel();
+        }
+    }
 }

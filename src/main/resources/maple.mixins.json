@@ -13,7 +13,8 @@
     "EntityMixin",
     "ClientPlayerInteractionManagerMixin",
     "WorldRendererMixin",
-    "MinecraftClientMixin"
+    "MinecraftClientMixin",
+    "ClientBrandRetrieverMixin"
   ],
   "injectors": {
     "defaultRequire": 1
