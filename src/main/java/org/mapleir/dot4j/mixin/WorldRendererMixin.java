@@ -25,10 +25,10 @@ public class WorldRendererMixin {
         }
     }
 
-    @Inject(method = "bobViewWhenHurt", at = @At("HEAD"), cancellable = true)
+/*    @Inject(method = "bobViewWhenHurt", at = @At("HEAD"), cancellable = true)
     public void disableHurtCam(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         if (ModuleManager.INSTANCE.getModuleByClass(NoHurtCam.class).isEnabled()) {
             ci.cancel();
         }
-    }
+    }*/
 }
