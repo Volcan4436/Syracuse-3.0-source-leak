@@ -14,7 +14,7 @@ import org.mapleir.dot4j.systems.module.core.Module;
 
 public class Speed extends Module {
 
-    ModeSetting modeSetting = new ModeSetting("Mode", "Vanilla", "Vanilla", "Vulcan", "Vulcan2");
+    ModeSetting modeSetting = new ModeSetting("Mode", "Vanilla", "Vanilla", "Vulcan", "Vulcan2", "SlowHop");
     public Speed() {
         addSettings(modeSetting);
     }
@@ -113,6 +113,11 @@ public class Speed extends Module {
 //                    event.setCancelled(true);
 //                }
 //            }
+        } else if (modeSetting.isMode("SlowHop")) {
+            if (mc.player.isSubmergedInWater()) return;
+            if (MovementUtils.isMoving()) {
+                if (mc.player.isOnGround()) mc.player.jump(); else mc.player.airStrafingSpeed = 0.05f;
+            }
         }
     }
 
