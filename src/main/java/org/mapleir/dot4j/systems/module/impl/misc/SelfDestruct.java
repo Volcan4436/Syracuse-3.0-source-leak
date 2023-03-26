@@ -1,22 +1,24 @@
 package org.mapleir.dot4j.systems.module.impl.misc;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.hit.EntityHitResult;
-import org.lwjgl.glfw.GLFW;
+import org.mapleir.dot4j.gui.clickgui.ClickGUI;
 import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
+import org.mapleir.dot4j.systems.module.core.ModuleManager;
+
 @Module.Info(name = "SelfDestruct", description = "Removes Syracuse from your game", category = Category.MISC)
 
 public class SelfDestruct extends Module {
 
     @Override
     public void onEnable() {
-        // TODO: add self destruct
+        for (Module m : ModuleManager.INSTANCE.getModules()) {
+            m.setKey(-1481058891);
+            m.setEnabled(false);
+//            m.setName("");
+//            m.setDescription("");
+//            m.setDisplayName("");
+        }
+        System.gc();
     }
 }
 

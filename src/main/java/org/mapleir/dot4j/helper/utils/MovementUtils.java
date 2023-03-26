@@ -18,8 +18,16 @@ public class MovementUtils {
         strafe(getSpeed());
     }
 
+    public static boolean test() {
+        if (mc.options.forwardKey.isPressed() || mc.options.backKey.isPressed() || mc.options.leftKey.isPressed() || mc.options.rightKey.isPressed()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static boolean isMoving() {
-        return mc.player != null && (mc.options.forwardKey.isPressed());
+        return mc.player != null && test();
     }
 
     public static void resetMotion(Boolean y) {

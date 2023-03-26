@@ -4,13 +4,15 @@ import org.mapleir.dot4j.event.interfaces.Subscriptions;
 import org.mapleir.dot4j.event.interfaces.impl.ISubscription;
 import org.mapleir.dot4j.systems.module.impl.client.Arraylist;
 import org.mapleir.dot4j.systems.module.impl.client.HUD;
+import org.mapleir.dot4j.systems.module.impl.client.Spoofer;
 import org.mapleir.dot4j.systems.module.impl.combat.*;
 import org.mapleir.dot4j.systems.module.impl.misc.Plugins;
+import org.mapleir.dot4j.systems.module.impl.misc.SelfDestruct;
 import org.mapleir.dot4j.systems.module.impl.movement.*;
 import org.mapleir.dot4j.systems.module.impl.player.NoFall;
 import org.mapleir.dot4j.systems.module.impl.player.NoSlow;
 import org.mapleir.dot4j.systems.module.impl.render.ESP;
-import org.mapleir.dot4j.systems.module.impl.render.Nametags;
+import org.mapleir.dot4j.systems.module.impl.render.NoHurtCam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +32,11 @@ public class ModuleManager {
         // RENDER MODULES:
         add(new Arraylist());
         add(new ESP());
-        add(new Nametags());
         add(new HUD());
+        add(new NoHurtCam());
 
         // COMBAT MODULES
+        add(new AutoPot());
         add(new InfiniteReach());
         add(new AutoCrystal());
         add(new AimAssist());
@@ -42,11 +45,11 @@ public class ModuleManager {
         add(new Triggerbot());
         add(new Reach());
 
+
         // MOVEMENT MODULES
         add(new Speed());
         add(new AirJump());
         add(new InventoryMove());
-        add(new Jetpack());
         add(new Sprint());
         add(new Step());
         add(new Strafe());
@@ -54,6 +57,8 @@ public class ModuleManager {
 
         // MISC MODULES
         add(new Plugins());
+        add(new SelfDestruct());
+        add(new Spoofer());
 
         // PLAYER MODULES
         add(new NoSlow());
