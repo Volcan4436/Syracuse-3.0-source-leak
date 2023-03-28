@@ -52,10 +52,10 @@ public class ClientMain implements ModInitializer {
         } else {
             System.out.println("Method does not exist");
         }
-        if(!IntegrityF.hasUnexpectedCode(API.class)) {
-            System.out.println("Shit cracking attempt");
+        if(!IntegrityF.isInternetAvailable()) {
+            System.out.println("No Internet");
         } else {
-            System.out.println("we are ok");
+            System.out.println("Yes Internet");
         }
         if (!API.validate()) {
             // user is not validated kwel

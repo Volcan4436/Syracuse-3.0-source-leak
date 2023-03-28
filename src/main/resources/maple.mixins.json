@@ -6,15 +6,17 @@
   "mixins": [
   ],
   "client": [
+    "ClientBrandRetrieverMixin",
+    "ClientConnectionMixin",
+    "ClientPlayerInteractionManagerMixin",
     "ClientPlayerMixin",
     "ClientPlayNetworkHandlerMixin",
+    "EntityEnderCrystalMixin",
+    "EntityMixin",
     "InGameHudMixin",
     "KeyboardMixin",
-    "EntityMixin",
-    "ClientPlayerInteractionManagerMixin",
-    "WorldRendererMixin",
     "MinecraftClientMixin",
-    "ClientBrandRetrieverMixin"
+    "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
