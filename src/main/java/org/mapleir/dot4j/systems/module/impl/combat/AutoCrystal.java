@@ -10,40 +10,71 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
+import org.mapleir.dot4j.gui.setting.NumberSetting;
 import org.mapleir.dot4j.helper.utils.CrystalUtils;
 import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
 
 @Module.Info(name = "AutoCrystal", description = "haxer tester", category = Category.COMBAT)
 public class AutoCrystal extends Module {
+    public NumberSetting placeTicks = new NumberSetting("PlaceTicks", 0, 3, 0, 0.1);
+    public NumberSetting breakTicks = new NumberSetting("BreakTicks", 0, 2, 0, 0.1);
+    private double tickTimer;
+
+    public AutoCrystal() {
+        addSettings(placeTicks, breakTicks);
+        tickTimer = 0;
+    }
+
+    public static boolean nullCheck() {
+        return mc.player != null && mc.world != null;
+    }
 
     public void placeCrystal() {
-
-        Vec3d cameraPos = mc.player.getCameraPosVec(1.0F);
-        Vec3d rotationVec = mc.player.getRotationVec(1.0F);
-        Vec3d targetPos = cameraPos.add(rotationVec.multiply(4.5D));
-        BlockHitResult hit = mc.world.raycast(new RaycastContext(cameraPos, targetPos, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player));
-        if (hit.getType() == HitResult.Type.BLOCK && CrystalUtils.canPlaceCrystalServer(hit.getBlockPos()) && (Blocks.OBSIDIAN == mc.world.getBlockState(hit.getBlockPos()).getBlock() || Blocks.BEDROCK == mc.world.getBlockState(hit.getBlockPos()).getBlock()) && (mc.player.getMainHandStack().isOf(Items.END_CRYSTAL))) {
-            ActionResult result = mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
-            if (result.isAccepted() && result.shouldSwingHand()) {
-                mc.player.swingHand(Hand.MAIN_HAND);
+        if (passedTicks(placeTicks.getValue())) {
+            Vec3d cameraPos = mc.player.getCameraPosVec(1.0F);
+            Vec3d rotationVec = mc.player.getRotationVec(1.0F);
+            Vec3d targetPos = cameraPos.add(rotationVec.multiply(4.5D));
+            BlockHitResult hit = mc.world.raycast(new RaycastContext(cameraPos, targetPos, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player));
+            if (hit.getType() == HitResult.Type.BLOCK && CrystalUtils.canPlaceCrystalClient(hit.getBlockPos()) && (Blocks.OBSIDIAN == mc.world.getBlockState(hit.getBlockPos()).getBlock() || Blocks.BEDROCK == mc.world.getBlockState(hit.getBlockPos()).getBlock()) && (mc.player.getMainHandStack().isOf(Items.END_CRYSTAL))) {
+                ActionResult result = mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
+                if (result.isAccepted() && result.shouldSwingHand()) {
+                    mc.player.swingHand(Hand.MAIN_HAND);
+                }
+                reset();
             }
         }
     }
 
     public void breakCrystal() {
-        if (mc.crosshairTarget instanceof EntityHitResult hit) {
-            if (hit.getEntity() instanceof EndCrystalEntity crystal) {
-                if (mc.player.getMainHandStack().isOf(Items.END_CRYSTAL)) {
-                    mc.interactionManager.attackEntity(mc.player, crystal);
-                    mc.player.swingHand(Hand.MAIN_HAND);
+        if (passedTicks(breakTicks.getValue())) {
+            if (mc.crosshairTarget instanceof EntityHitResult hit) {
+                if (hit.getEntity() instanceof EndCrystalEntity crystal) {
+                    if (mc.player.getMainHandStack().isOf(Items.END_CRYSTAL)) {
+                        mc.interactionManager.attackEntity(mc.player, crystal);
+                        mc.player.swingHand(Hand.MAIN_HAND);
+                        reset();
+                    }
                 }
             }
         }
     }
 
+    public boolean passedTicks(double time) {
+        return tickTimer >= time;
+    }
+
+    public void reset() {
+        tickTimer = 0;
+    }
+
     @Override
     public void onTick() {
+        if (nullCheck()) {
+            ++tickTimer;
+        } else {
+            tickTimer = 0;
+        }
         placeCrystal();
         breakCrystal();
     }
