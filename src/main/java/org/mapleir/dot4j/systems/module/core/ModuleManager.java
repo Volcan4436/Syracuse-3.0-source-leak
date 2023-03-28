@@ -12,7 +12,6 @@ import org.mapleir.dot4j.systems.module.impl.movement.*;
 import org.mapleir.dot4j.systems.module.impl.player.NoFall;
 import org.mapleir.dot4j.systems.module.impl.player.NoSlow;
 import org.mapleir.dot4j.systems.module.impl.render.ESP;
-import org.mapleir.dot4j.systems.module.impl.render.Nametags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,6 @@ public class ModuleManager {
         // RENDER MODULES:
         add(new Arraylist());
         add(new ESP());
-//        add(new Nametags());
         add(new HUD());
 
         // COMBAT MODULES
@@ -49,7 +47,6 @@ public class ModuleManager {
         add(new Speed());
         add(new AirJump());
         add(new InventoryMove());
-//        add(new Jetpack());
         add(new Sprint());
         add(new Step());
         add(new Strafe());

@@ -32,6 +32,10 @@ public abstract class ClientBrandRetrieverMixin {
                             break;
                         case "Lunar":
                             callback.setReturnValue("Lunarclient:71aa13d");
+                            break;
+                        case "Geyser":
+                            callback.setReturnValue("Geyser");
+                            break;
                     }
                 }
             }
