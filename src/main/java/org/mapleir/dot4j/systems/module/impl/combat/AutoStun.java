@@ -28,6 +28,7 @@ public class AutoStun extends Module {
         }
 
     }
+
     private int findAxeHotbarSlot(PlayerEntity player) {
         for (int i = 0; i < 9; i++) {
             ItemStack stack = player.getInventory().getStack(i);

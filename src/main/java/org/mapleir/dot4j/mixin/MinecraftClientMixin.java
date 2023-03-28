@@ -1,8 +1,8 @@
 package org.mapleir.dot4j.mixin;
 
+import net.minecraft.client.MinecraftClient;
 import org.mapleir.dot4j.ClientMain;
 import org.mapleir.dot4j.event.impl.EventUpdate;
-import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,7 +16,7 @@ public class MinecraftClientMixin {
         new EventUpdate().call();
     }
 
-    @Inject(at=@At("HEAD"), method="tick")
+    @Inject(at = @At("HEAD"), method = "tick")
     public void onTick(CallbackInfo ci) {
         ClientMain.getINSTANCE().onTick();
     }

@@ -5,7 +5,7 @@ import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
 
 @Module.Info(name = "JetPack", description = "Launch yourself by holding jump", category = Category.MOVEMENT)
-public class JetPack extends Module{
+public class JetPack extends Module {
 
 
     @Override

@@ -70,7 +70,7 @@ public class ArrayHelper<T> implements Iterable<T> {
 
     public T[] array() {
 
-        return (T[]) this.elements;
+        return this.elements;
     }
 
     public int size() {

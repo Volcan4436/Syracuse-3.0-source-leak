@@ -1,9 +1,9 @@
 package org.mapleir.dot4j.systems.module.impl.combat;
 
 import org.mapleir.dot4j.gui.setting.NumberSetting;
-import org.mapleir.dot4j.gui.setting.Setting;
 import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
+
 @Module.Info(name = "Reach", description = "Extends your reach", category = Category.COMBAT)
 
 public class Reach extends Module {

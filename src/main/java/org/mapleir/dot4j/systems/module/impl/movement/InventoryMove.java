@@ -8,6 +8,7 @@ import net.minecraft.client.util.InputUtil;
 import org.mapleir.dot4j.gui.setting.BooleanSetting;
 import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
+
 @Module.Info(name = "InventoryMove", description = "Move freely", category = Category.MOVEMENT)
 public class InventoryMove extends Module {
 

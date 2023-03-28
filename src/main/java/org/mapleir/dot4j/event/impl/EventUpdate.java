@@ -6,8 +6,7 @@ public class EventUpdate extends Event {
 
     private static final EventUpdate instance = new EventUpdate();
 
-    public static EventUpdate get()
-    {
+    public static EventUpdate get() {
         instance.setCancelled(false);
         return instance;
     }

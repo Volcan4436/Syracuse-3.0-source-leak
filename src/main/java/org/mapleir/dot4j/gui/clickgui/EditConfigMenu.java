@@ -1,12 +1,12 @@
 package org.mapleir.dot4j.gui.clickgui;
 
+import net.minecraft.client.util.math.MatrixStack;
 import org.mapleir.dot4j.gui.clickgui.components.TextComponent;
-import org.mapleir.dot4j.systems.config.Config;
-import org.mapleir.dot4j.systems.config.ConfigLoader;
 import org.mapleir.dot4j.helper.utils.Animation;
 import org.mapleir.dot4j.helper.utils.RenderUtils;
 import org.mapleir.dot4j.helper.utils.Theme;
-import net.minecraft.client.util.math.MatrixStack;
+import org.mapleir.dot4j.systems.config.Config;
+import org.mapleir.dot4j.systems.config.ConfigLoader;
 
 import java.awt.*;
 import java.io.IOException;
@@ -14,12 +14,10 @@ import java.io.IOException;
 public class EditConfigMenu extends org.mapleir.dot4j.gui.clickgui.components.Component {
 
     private final ConfigScreen parent;
-    private Config editing;
-
     private final Animation animation;
     private final org.mapleir.dot4j.gui.clickgui.components.TextComponent nameText;
     private final org.mapleir.dot4j.gui.clickgui.components.TextComponent descriptionText;
-
+    private final Config editing;
     private boolean close;
 
     public EditConfigMenu(ConfigScreen parent, Config editing) {
@@ -51,12 +49,12 @@ public class EditConfigMenu extends org.mapleir.dot4j.gui.clickgui.components.Co
                 pX + 300 + animation.getValue(),
                 pY + 150 + animation.getValue(), 10, 20, Theme.CONFIG_EDIT_BG);
 
-        if(animation.hasEnded() && close) {
+        if (animation.hasEnded() && close) {
             parent.editConfigMenu = null;
             return;
         }
 
-        if(animation.hasEnded() && !close) {
+        if (animation.hasEnded() && !close) {
             mc.textRenderer.draw(matrices, "Name", pX + 158, pY + 110, Theme.MODULE_TEXT.getRGB());
             nameText.draw(matrices, pX + 155, pY + 120, 12);
 
@@ -81,12 +79,12 @@ public class EditConfigMenu extends org.mapleir.dot4j.gui.clickgui.components.Co
     public void mouseClicked(double mouseX, double mouseY, int button) {
         float pX = parent.parent.windowX, pY = parent.parent.windowY, pWidth = parent.parent.width, pHeight = parent.parent.height;
 
-        if(isHovered(pX + 337, pY + 103, pX + 346, pY + 112, mouseX, mouseY) && button == 0) {
+        if (isHovered(pX + 337, pY + 103, pX + 346, pY + 112, mouseX, mouseY) && button == 0) {
             close();
         }
 
-        if(isHovered(pX + 310, pY + 185, pX + 345, pY + 195, mouseX, mouseY) && button == 0) {
-            if(editing == ConfigLoader.getDefaultConfig()) {
+        if (isHovered(pX + 310, pY + 185, pX + 345, pY + 195, mouseX, mouseY) && button == 0) {
+            if (editing == ConfigLoader.getDefaultConfig()) {
                 // TODO: cannot delete default config
                 return;
             }
@@ -110,7 +108,7 @@ public class EditConfigMenu extends org.mapleir.dot4j.gui.clickgui.components.Co
 
     @Override
     public void keyPressed(int keyCode, int scanCode, int modifiers) {
-        if(editing != ConfigLoader.getDefaultConfig()) {
+        if (editing != ConfigLoader.getDefaultConfig()) {
             nameText.keyPressed(keyCode, scanCode, modifiers);
         }
 

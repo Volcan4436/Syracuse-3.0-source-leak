@@ -4,7 +4,6 @@
   "version": "0.4.2",
   "name": "mapleir",
   "license": "Apache-2.0",
-
   "environment": "*",
   "entrypoints": {
     "client": [

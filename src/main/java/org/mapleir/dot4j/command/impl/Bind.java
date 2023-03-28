@@ -7,13 +7,12 @@ import org.mapleir.dot4j.helper.utils.KeyUtils;
 import org.mapleir.dot4j.systems.module.core.Module;
 import org.mapleir.dot4j.systems.module.core.ModuleManager;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Bind extends Command {
     private static final Map<String, Integer> KEY_MAP = new HashMap<>();
+
     static {
         KEY_MAP.put("a", GLFW.GLFW_KEY_A);
         KEY_MAP.put("b", GLFW.GLFW_KEY_B);

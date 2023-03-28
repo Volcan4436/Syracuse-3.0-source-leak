@@ -1,8 +1,8 @@
 package org.mapleir.dot4j.mixin;
 
-import org.mapleir.dot4j.event.impl.HandSwingEvent;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.Hand;
+import org.mapleir.dot4j.event.impl.HandSwingEvent;
 import org.mapleir.dot4j.gui.setting.BooleanSetting;
 import org.mapleir.dot4j.systems.module.core.ModuleManager;
 import org.mapleir.dot4j.systems.module.impl.player.NoSlow;
@@ -17,7 +17,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerMixin {
 
-    @Shadow public abstract boolean isSneaking();
+    @Shadow
+    public abstract boolean isSneaking();
 
     @Inject(at = @At("HEAD"), method = "swingHand")
     public void swingHand(Hand hand, CallbackInfo ci) {
@@ -27,7 +28,8 @@ public abstract class ClientPlayerMixin {
     @Redirect(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z"), require = 0)
     private boolean tickMovement(ClientPlayerEntity player) {
         if (ModuleManager.INSTANCE.getModuleByClass(NoSlow.class).isEnabled() &&
-                ((BooleanSetting) ModuleManager.INSTANCE.getModuleByClass(NoSlow.class).getSettings().get(0)).isEnabled()) return false;
+                ((BooleanSetting) ModuleManager.INSTANCE.getModuleByClass(NoSlow.class).getSettings().get(0)).isEnabled())
+            return false;
         return player.isUsingItem();
     }
 

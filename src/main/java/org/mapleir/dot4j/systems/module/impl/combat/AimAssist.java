@@ -1,16 +1,14 @@
 package org.mapleir.dot4j.systems.module.impl.combat;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.math.MatrixStack;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.FireworkRocketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import org.mapleir.dot4j.event.interfaces.impl.ISubWorldRenderEnd;
 import org.mapleir.dot4j.gui.setting.BooleanSetting;
 import org.mapleir.dot4j.gui.setting.NumberSetting;
@@ -19,9 +17,7 @@ import org.mapleir.dot4j.helper.utils.MathUtil;
 import org.mapleir.dot4j.helper.utils.Rot;
 import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.MathHelper;
+
 @Module.Info(name = "AimAssist", description = "swag", category = Category.COMBAT)
 
 public class AimAssist extends Module implements ISubWorldRenderEnd {
@@ -37,17 +33,6 @@ public class AimAssist extends Module implements ISubWorldRenderEnd {
         addSettings(distance, strength, seeOnly, yawAssist, pitchAssist);
     }
 
-    public boolean isHoldingFirework() {
-        PlayerInventory inventory = mc.player.getInventory();
-        ItemStack heldItem = inventory.getMainHandStack();
-
-        if (heldItem.getItem() instanceof FireworkRocketItem) {
-            return true;
-        }
-
-        return false;
-    }
-
     public static boolean isOverEntity() {
         HitResult hitResult = mc.crosshairTarget;
         if (hitResult.getType() == HitResult.Type.ENTITY) {
@@ -57,11 +42,19 @@ public class AimAssist extends Module implements ISubWorldRenderEnd {
             return false;
         }
     }
+
+    public boolean isHoldingFirework() {
+        PlayerInventory inventory = mc.player.getInventory();
+        ItemStack heldItem = inventory.getMainHandStack();
+
+        return heldItem.getItem() instanceof FireworkRocketItem;
+    }
+
     @Override
     public void onWorldRenderEnd(WorldRenderContext ctx) {
-        if(!this.isEnabled()) return;
-        if(isHoldingFirework()) return;
-        if(isOverEntity()) return;
+        if (!this.isEnabled()) return;
+        if (isHoldingFirework()) return;
+        if (isOverEntity()) return;
         if (mc.currentScreen != null) return;
 
         PlayerEntity targetPlayer = EntityUtils.findClosest(PlayerEntity.class, distance.getFloatValue());
@@ -107,7 +100,7 @@ public class AimAssist extends Module implements ISubWorldRenderEnd {
         float stren2 = strength.getFloatValue() / 50;
         yaw = MathHelper.lerpAngleDegrees(stren2, mc.player.getYaw(), (float) targetRot.yaw());
         pitch = MathHelper.lerpAngleDegrees(stren2, mc.player.getPitch(), (float) targetRot.pitch());
-        if(yawAssist.isEnabled()) mc.player.setYaw(yaw);
-        if(pitchAssist.isEnabled()) mc.player.setPitch(pitch);
+        if (yawAssist.isEnabled()) mc.player.setYaw(yaw);
+        if (pitchAssist.isEnabled()) mc.player.setPitch(pitch);
     }
 }

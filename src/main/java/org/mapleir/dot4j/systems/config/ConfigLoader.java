@@ -1,8 +1,8 @@
 package org.mapleir.dot4j.systems.config;
 
 import com.google.gson.JsonObject;
-import org.mapleir.dot4j.ClientMain;
 import net.fabricmc.loader.api.FabricLoader;
+import org.mapleir.dot4j.ClientMain;
 import org.mapleir.dot4j.systems.auth.API;
 
 import java.io.BufferedReader;

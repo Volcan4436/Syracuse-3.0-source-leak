@@ -1,7 +1,7 @@
 package org.mapleir.dot4j.mixin;
 
-import org.mapleir.dot4j.ClientMain;
 import net.minecraft.client.Keyboard;
+import org.mapleir.dot4j.ClientMain;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
