@@ -1,6 +1,7 @@
 package org.mapleir.dot4j.systems.module.impl.combat;
 
 import net.minecraft.block.Blocks;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
@@ -10,6 +11,10 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
+import org.mapleir.dot4j.event.EventTarget;
+import org.mapleir.dot4j.event.impl.EventMotion;
+import org.mapleir.dot4j.event.impl.EventUpdate;
+import org.mapleir.dot4j.gui.setting.ModeSetting;
 import org.mapleir.dot4j.gui.setting.NumberSetting;
 import org.mapleir.dot4j.helper.utils.CrystalUtils;
 import org.mapleir.dot4j.systems.module.core.Category;
@@ -19,10 +24,11 @@ import org.mapleir.dot4j.systems.module.core.Module;
 public class AutoCrystal extends Module {
     public NumberSetting placeTicks = new NumberSetting("PlaceTicks", 0, 3, 0, 0.1);
     public NumberSetting breakTicks = new NumberSetting("BreakTicks", 0, 2, 0, 0.1);
+    ModeSetting modeSetting = new ModeSetting("Mode", "Tick", "Tick", "Update", "Motion", "Render");
     private double tickTimer;
 
     public AutoCrystal() {
-        addSettings(placeTicks, breakTicks);
+        addSettings(modeSetting, placeTicks, breakTicks);
         tickTimer = 0;
     }
 
@@ -32,8 +38,8 @@ public class AutoCrystal extends Module {
 
     public void placeCrystal() {
         if (passedTicks(placeTicks.getValue())) {
-            Vec3d cameraPos = mc.player.getCameraPosVec(1.0F);
-            Vec3d rotationVec = mc.player.getRotationVec(1.0F);
+            Vec3d cameraPos = mc.player.getCameraPosVec(0F);
+            Vec3d rotationVec = mc.player.getRotationVec(0F);
             Vec3d targetPos = cameraPos.add(rotationVec.multiply(4.5D));
             BlockHitResult hit = mc.world.raycast(new RaycastContext(cameraPos, targetPos, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player));
             if (hit.getType() == HitResult.Type.BLOCK && CrystalUtils.canPlaceCrystalClient(hit.getBlockPos()) && (Blocks.OBSIDIAN == mc.world.getBlockState(hit.getBlockPos()).getBlock() || Blocks.BEDROCK == mc.world.getBlockState(hit.getBlockPos()).getBlock()) && (mc.player.getMainHandStack().isOf(Items.END_CRYSTAL))) {
@@ -69,13 +75,39 @@ public class AutoCrystal extends Module {
     }
 
     @Override
+    public void onWorldRender(MatrixStack matrices) {
+        if (modeSetting.isMode("Render")) {
+            placeCrystal();
+            breakCrystal();
+        }
+    }
+
+    @Override
     public void onTick() {
         if (nullCheck()) {
             ++tickTimer;
         } else {
             tickTimer = 0;
         }
-        placeCrystal();
-        breakCrystal();
+        if (modeSetting.isMode("Tick")) {
+            placeCrystal();
+            breakCrystal();
+        }
+    }
+
+    @EventTarget
+    public void onUpdate(EventUpdate e) {
+        if (modeSetting.isMode("Update")) {
+            placeCrystal();
+            breakCrystal();
+        }
+    }
+
+    @EventTarget
+    public void onMove(EventMotion e) {
+        if (modeSetting.isMode("Motion")) {
+            placeCrystal();
+            breakCrystal();
+        }
     }
 }
