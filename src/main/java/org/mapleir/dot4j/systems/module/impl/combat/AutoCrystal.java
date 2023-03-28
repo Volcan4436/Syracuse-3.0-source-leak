@@ -12,6 +12,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import org.mapleir.dot4j.event.EventTarget;
+import org.mapleir.dot4j.event.impl.EndCrystalExplosionMcPlayerEvent;
 import org.mapleir.dot4j.event.impl.EventMotion;
 import org.mapleir.dot4j.event.impl.EventUpdate;
 import org.mapleir.dot4j.gui.setting.ModeSetting;
@@ -101,6 +102,11 @@ public class AutoCrystal extends Module {
             placeCrystal();
             breakCrystal();
         }
+    }
+
+    @EventTarget
+    public void onExplosion(EndCrystalExplosionMcPlayerEvent e) {
+        placeCrystal();
     }
 
     @EventTarget

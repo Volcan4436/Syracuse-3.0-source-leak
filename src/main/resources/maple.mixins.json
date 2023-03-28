@@ -11,6 +11,7 @@
     "ClientPlayerInteractionManagerMixin",
     "ClientPlayerMixin",
     "ClientPlayNetworkHandlerMixin",
+    "EntityEnderCrystalMixin",
     "EntityMixin",
     "InGameHudMixin",
     "KeyboardMixin",
