@@ -8,33 +8,39 @@ import java.lang.reflect.InvocationTargetException;
 public abstract class Event {
 
     /**
-     *
      * Main events you may need:
-     *
+     * <p>
      * Minecraft:
      * - EventKeyboard
      * - EventMiddleClick
      * - EventTick
-     *
+     * <p>
      * EntityPlayerSP:
      * - EventUpdate
      * - EventPreMotionUpdates
      * - EventPostMotionUpdates
-     *
+     * <p>
      * GuiIngame:
      * - EventRender2D
-     *
+     * <p>
      * EntityRenderer:
      * - EventRender3D
-     *
      */
     private boolean cancelled;
 
-    public enum State {
-        PRE("PRE", 0),
-        POST("POST", 1);
+    private static void call(final Event event) {
+        final ArrayHelper<Data> dataList = EventManager.get(event.getClass());
 
-        private State(final String string, final int number) {}
+        if (dataList != null) {
+            for (final Data data : dataList) {
+                try {
+                    data.target.invoke(data.source, event);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
     }
 
     public Event call() {
@@ -51,19 +57,11 @@ public abstract class Event {
         this.cancelled = cancelled;
     }
 
-    private static void call(final Event event) {
-        final ArrayHelper<Data> dataList = EventManager.get(event.getClass());
+    public enum State {
+        PRE("PRE", 0),
+        POST("POST", 1);
 
-        if (dataList != null) {
-            for (final Data data : dataList) {
-                try {
-                    data.target.invoke(data.source, event);
-                }
-                catch (IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
-
-            }
+        State(final String string, final int number) {
         }
     }
 }

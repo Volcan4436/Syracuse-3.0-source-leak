@@ -1,11 +1,8 @@
 package org.mapleir.dot4j.mixin;
 
 import net.minecraft.entity.Entity;
-import org.mapleir.dot4j.gui.setting.BooleanSetting;
-import org.mapleir.dot4j.gui.setting.NumberSetting;
 import org.mapleir.dot4j.systems.module.core.ModuleManager;
 import org.mapleir.dot4j.systems.module.impl.combat.Hitboxes;
-import org.mapleir.dot4j.systems.module.impl.combat.Reach;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

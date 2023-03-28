@@ -1,7 +1,7 @@
 package org.mapleir.dot4j.event.impl;
 
-import org.mapleir.dot4j.event.Event;
 import net.minecraft.network.Packet;
+import org.mapleir.dot4j.event.Event;
 
 public class PacketSendEvent extends Event {
 

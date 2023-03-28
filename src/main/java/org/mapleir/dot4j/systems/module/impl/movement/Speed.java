@@ -2,25 +2,25 @@ package org.mapleir.dot4j.systems.module.impl.movement;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
-import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.util.math.Vec3d;
 import org.mapleir.dot4j.event.EventTarget;
 import org.mapleir.dot4j.event.impl.EventUpdate;
-import org.mapleir.dot4j.helper.utils.MovementUtils;
 import org.mapleir.dot4j.gui.setting.ModeSetting;
+import org.mapleir.dot4j.helper.utils.MovementUtils;
 import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
+
 @Module.Info(name = "Speed", description = "Walk, but faster", category = Category.MOVEMENT)
 
 public class Speed extends Module {
 
     ModeSetting modeSetting = new ModeSetting("Mode", "Vanilla", "Vanilla", "Vulcan", "Vulcan2", "SlowHop");
+    private int jumpTicks = 0;
+    private int ticks, offGroundTicks;
+
     public Speed() {
         addSettings(modeSetting);
     }
-
-    private int jumpTicks = 0;
-    private int ticks, offGroundTicks;
 
     public void onEnable() {
         super.onEnable();
@@ -36,7 +36,6 @@ public class Speed extends Module {
         jumpTicks = 0;
         ticks = 0;
     }
-
 
 
     @EventTarget
@@ -116,7 +115,8 @@ public class Speed extends Module {
         } else if (modeSetting.isMode("SlowHop")) {
             if (mc.player.isSubmergedInWater()) return;
             if (MovementUtils.isMoving()) {
-                if (mc.player.isOnGround()) mc.player.jump(); else mc.player.airStrafingSpeed = 0.05f;
+                if (mc.player.isOnGround()) mc.player.jump();
+                else mc.player.airStrafingSpeed = 0.05f;
             }
         }
     }

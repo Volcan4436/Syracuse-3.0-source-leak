@@ -17,9 +17,8 @@ public class Sprint extends Module {
     public void onTick() {
         if (this.isEnabled()) {
             if (smart.isEnabled()) {
-                if (mc.player.forwardSpeed>0) mc.player.setSprinting(true);
-            }
-            else mc.player.setSprinting(true);
+                if (mc.player.forwardSpeed > 0) mc.player.setSprinting(true);
+            } else mc.player.setSprinting(true);
         }
         super.onTick();
     }

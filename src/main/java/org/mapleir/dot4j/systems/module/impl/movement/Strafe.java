@@ -9,20 +9,21 @@ import org.mapleir.dot4j.gui.setting.ModeSetting;
 import org.mapleir.dot4j.gui.setting.NumberSetting;
 import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
+
 @Module.Info(name = "Strafe", description = "Moves, but faster", category = Category.MOVEMENT)
 public class Strafe extends Module {
-
-    public static GameMode getGameMode(PlayerEntity player) {
-        PlayerListEntry playerListEntry = mc.getNetworkHandler().getPlayerListEntry(player.getUuid());
-        if (playerListEntry != null) return playerListEntry.getGameMode();
-        return GameMode.DEFAULT;
-    }
 
     public NumberSetting speed = new NumberSetting("Speed", 0.5, 2, 0.5, 0.1);
     public ModeSetting mode = new ModeSetting("Mode", "Static", "Static", "Vanilla");
 
     public Strafe() {
         addSettings(speed, mode);
+    }
+
+    public static GameMode getGameMode(PlayerEntity player) {
+        PlayerListEntry playerListEntry = mc.getNetworkHandler().getPlayerListEntry(player.getUuid());
+        if (playerListEntry != null) return playerListEntry.getGameMode();
+        return GameMode.DEFAULT;
     }
 
     @Override
@@ -32,7 +33,7 @@ public class Strafe extends Module {
         }
 
         if (mode.getMode().equalsIgnoreCase("Vanilla")) {
-            mc.player.airStrafingSpeed = (float) (speed.getFloatValue() / 10);
+            mc.player.airStrafingSpeed = speed.getFloatValue() / 10;
         } else if (mode.getMode().equalsIgnoreCase("Static")) {
             GameOptions go = mc.options;
             float y = mc.player.getYaw();

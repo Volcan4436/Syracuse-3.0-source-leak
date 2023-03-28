@@ -1,14 +1,7 @@
 package org.mapleir.dot4j.systems.auth;
+
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.MessageDigest;
-import java.util.Arrays;
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 
 public class IntegrityA {
     public static boolean isRunningOnVM() {

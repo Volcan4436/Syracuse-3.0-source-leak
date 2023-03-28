@@ -1,7 +1,7 @@
 package org.mapleir.dot4j.event.impl;
 
-import org.mapleir.dot4j.event.Event;
 import net.minecraft.network.packet.s2c.play.CommandSuggestionsS2CPacket;
+import org.mapleir.dot4j.event.Event;
 
 public class CommandSuggestEvent extends Event {
 

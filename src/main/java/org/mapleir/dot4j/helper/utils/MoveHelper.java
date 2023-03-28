@@ -8,8 +8,7 @@ import static org.mapleir.dot4j.helper.utils.PacketHelper.mc;
 
 public class MoveHelper {
 
-    public static boolean hasMovement()
-    {
+    public static boolean hasMovement() {
         final Vec3d playerMovement = mc.player.getVelocity();
         return playerMovement.getX() != 0 || playerMovement.getY() != 0 || playerMovement.getZ() != 0;
     }
@@ -26,8 +25,7 @@ public class MoveHelper {
         return motionY;
     }
 
-    public static double getDistanceToGround(Entity entity)
-    {
+    public static double getDistanceToGround(Entity entity) {
         final double playerX = mc.player.getX();
         final int playerHeight = (int) Math.floor(mc.player.getY());
         final double playerZ = mc.player.getZ();

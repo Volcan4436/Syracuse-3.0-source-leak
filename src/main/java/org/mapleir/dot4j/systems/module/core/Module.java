@@ -1,45 +1,31 @@
 package org.mapleir.dot4j.systems.module.core;
 
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 import org.mapleir.dot4j.event.EventManager;
 import org.mapleir.dot4j.gui.setting.BooleanSetting;
 import org.mapleir.dot4j.gui.setting.ModeSetting;
 import org.mapleir.dot4j.gui.setting.NumberSetting;
 import org.mapleir.dot4j.gui.setting.Setting;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
-import org.mapleir.dot4j.systems.module.core.Category;
 
-import java.lang.annotation.*;
-import java.lang.reflect.Field;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Module {
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.TYPE)
-    public @interface Info {
-        String name();
-        String description();
-        Category category();
-    }
+    protected static MinecraftClient mc = MinecraftClient.getInstance();
+    private final List<Setting> settings = new ArrayList<>();
     private String name, description, displayName;
     private int key;
     private boolean enabled;
     private Category category;
-
     private boolean expanded;
-
-    protected static MinecraftClient mc = MinecraftClient.getInstance();
-
-    private final List<Setting> settings = new ArrayList<>();
-
-    public boolean isNull() {
-        return Objects.isNull(mc.world) || Objects.isNull(mc.player) || Objects.isNull(mc.player);
-    }
 
     public Module() {
         Info info = getClass().getAnnotation(Info.class);
@@ -50,17 +36,20 @@ public abstract class Module {
             this.displayName = name;
         }
     }
-    public void toggle() {
-       this.enabled = !this.enabled;
 
-       if(enabled) {
-           onEnable();
-       }
-       else {
-           onDisable();
-       }
+    public boolean isNull() {
+        return Objects.isNull(mc.world) || Objects.isNull(mc.player) || Objects.isNull(mc.player);
     }
 
+    public void toggle() {
+        this.enabled = !this.enabled;
+
+        if (enabled) {
+            onEnable();
+        } else {
+            onDisable();
+        }
+    }
 
     protected BooleanSetting registerBoolean(String name, boolean defaultValue) {
         BooleanSetting setting = new BooleanSetting(name, defaultValue);
@@ -84,27 +73,25 @@ public abstract class Module {
         return settings;
     }
 
-    public void addSettings(Setting...settingz) {
+    public void addSettings(Setting... settingz) {
         settings.addAll(Arrays.asList(settingz));
     }
 
-    public void onEnable() {EventManager.register(this);}
+    public void onEnable() {
+        EventManager.register(this);
+    }
 
-    public void draw(MatrixStack matrices) {}
+    public void draw(MatrixStack matrices) {
+    }
 
-    public void onDisable() {EventManager.unregister(this);}
-    public void onTick() {}
+    public void onDisable() {
+        EventManager.unregister(this);
+    }
 
-    public void onWorldRender(MatrixStack matrices) {}
+    public void onTick() {
+    }
 
-    public void setEnabled(boolean toggled) {
-        this.enabled = toggled;
-        if(enabled) {
-            onEnable();
-        }
-        else {
-            onDisable();
-        }
+    public void onWorldRender(MatrixStack matrices) {
     }
 
     public String getName() {
@@ -130,8 +117,18 @@ public abstract class Module {
     public void setKey(int key) {
         this.key = key;
     }
+
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public void setEnabled(boolean toggled) {
+        this.enabled = toggled;
+        if (enabled) {
+            onEnable();
+        } else {
+            onDisable();
+        }
     }
 
     public Category getCategory() {
@@ -159,7 +156,17 @@ public abstract class Module {
     }
 
     protected void sendMsg(String message) {
-        if(mc.player == null) return;
+        if (mc.player == null) return;
         mc.player.sendMessage(Text.of(message.replace("&", "§")));
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    public @interface Info {
+        String name();
+
+        String description();
+
+        Category category();
     }
 }

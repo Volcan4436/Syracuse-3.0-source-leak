@@ -3,6 +3,7 @@ package org.mapleir.dot4j.systems.module.impl.combat;
 import org.mapleir.dot4j.gui.setting.NumberSetting;
 import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
+
 @Module.Info(name = "Hitboxes", description = "Expands hitboxes", category = Category.COMBAT)
 
 public class Hitboxes extends Module {

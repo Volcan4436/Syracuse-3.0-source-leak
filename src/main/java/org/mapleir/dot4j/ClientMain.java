@@ -1,15 +1,15 @@
 package org.mapleir.dot4j;
 
+import net.fabricmc.api.ModInitializer;
+import net.minecraft.client.MinecraftClient;
+import org.lwjgl.glfw.GLFW;
 import org.mapleir.dot4j.event.impl.WorldRenderEndEvent;
 import org.mapleir.dot4j.gui.clickgui.ClickGUI;
+import org.mapleir.dot4j.helper.utils.Theme;
 import org.mapleir.dot4j.systems.config.Config;
 import org.mapleir.dot4j.systems.config.ConfigLoader;
 import org.mapleir.dot4j.systems.module.core.Module;
 import org.mapleir.dot4j.systems.module.core.ModuleManager;
-import org.mapleir.dot4j.helper.utils.Theme;
-import net.fabricmc.api.ModInitializer;
-import net.minecraft.client.MinecraftClient;
-import org.lwjgl.glfw.GLFW;
 
 import java.io.IOException;
 
@@ -23,6 +23,19 @@ public class ClientMain implements ModInitializer {
     private static final String commandPrefix = "#";
 
     public static Config selectedConfig;
+
+    public static ClientMain getINSTANCE() {
+        return INSTANCE;
+    }
+
+    // getters
+    public static String getName() {
+        return name;
+    }
+
+    public static String getCommandPrefix() {
+        return commandPrefix;
+    }
 
     @Override
     public void onInitialize() {
@@ -64,13 +77,13 @@ public class ClientMain implements ModInitializer {
             // validated
             System.out.println("User is validated");
         */
-            try {
-                ConfigLoader.loadConfigs();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            WorldRenderEndEvent.init();
-            Theme.darkTheme();
+        try {
+            ConfigLoader.loadConfigs();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        WorldRenderEndEvent.init();
+        Theme.darkTheme();
 //        }
     }
 
@@ -79,8 +92,8 @@ public class ClientMain implements ModInitializer {
         if (mc.currentScreen == null) {
             if (action == GLFW.GLFW_PRESS) {
                 if (key == GLFW.GLFW_KEY_RIGHT_SHIFT) mc.setScreen(ClickGUI.getINSTANCE());
-                for(Module module : ModuleManager.INSTANCE.getModules()) {
-                    if(module.getKey() == key) {
+                for (Module module : ModuleManager.INSTANCE.getModules()) {
+                    if (module.getKey() == key) {
                         module.toggle();
                     }
                 }
@@ -90,20 +103,9 @@ public class ClientMain implements ModInitializer {
 
     public void onTick() {
         if (mc.player != null) {
-            for (Module module: ModuleManager.INSTANCE.getEnabledModules()) {
+            for (Module module : ModuleManager.INSTANCE.getEnabledModules()) {
                 module.onTick();
             }
         }
-    }
-    public static ClientMain getINSTANCE() {
-        return INSTANCE;
-    }
-
-    // getters
-    public static String getName() {
-        return name;
-    }
-    public static String getCommandPrefix() {
-        return commandPrefix;
     }
 }

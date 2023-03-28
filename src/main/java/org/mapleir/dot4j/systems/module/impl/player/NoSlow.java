@@ -20,29 +20,7 @@ public class NoSlow extends Module {
     private int ticks = 0;
 
     public NoSlow() {
-        addSettings(items, sneaking,webs);
-    }
-
-    @Override
-    public void onDisable() {
-        ticks = 0;
-        super.onDisable();
-    }
-
-    @Override
-    public void onEnable() {
-        ticks = 0;
-        super.onEnable();
-    }
-
-    // items no slow handled in ClientPlayerMixin
-
-
-    @EventTarget
-    public void onTick() {
-        if (webs.isEnabled() && doesBoxTouchBlock(mc.player.getBoundingBox(), Blocks.COBWEB)) {
-            mc.player.slowMovement(mc.world.getBlockState(mc.player.getBlockPos()), new Vec3d(2.35, 1.75, 2.35));
-        }
+        addSettings(items, sneaking, webs);
     }
 
     public static boolean doesBoxTouchBlock(Box box, Block block) {
@@ -56,6 +34,27 @@ public class NoSlow extends Module {
             }
         }
         return false;
+    }
+
+    @Override
+    public void onDisable() {
+        ticks = 0;
+        super.onDisable();
+    }
+
+    // items no slow handled in ClientPlayerMixin
+
+    @Override
+    public void onEnable() {
+        ticks = 0;
+        super.onEnable();
+    }
+
+    @EventTarget
+    public void onTick() {
+        if (webs.isEnabled() && doesBoxTouchBlock(mc.player.getBoundingBox(), Blocks.COBWEB)) {
+            mc.player.slowMovement(mc.world.getBlockState(mc.player.getBlockPos()), new Vec3d(2.35, 1.75, 2.35));
+        }
     }
 
 

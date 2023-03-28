@@ -1,20 +1,20 @@
 package org.mapleir.dot4j.gui.clickgui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import org.mapleir.dot4j.ClientMain;
-import org.mapleir.dot4j.gui.clickgui.components.ModButton;
-import org.mapleir.dot4j.systems.module.core.Category;
-import org.mapleir.dot4j.systems.module.core.Module;
-import org.mapleir.dot4j.systems.module.core.ModuleManager;
-import org.mapleir.dot4j.helper.utils.Animation;
-import org.mapleir.dot4j.helper.utils.RenderUtils;
-import org.mapleir.dot4j.helper.utils.Theme;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import org.mapleir.dot4j.ClientMain;
+import org.mapleir.dot4j.gui.clickgui.components.ModButton;
+import org.mapleir.dot4j.helper.utils.Animation;
+import org.mapleir.dot4j.helper.utils.RenderUtils;
+import org.mapleir.dot4j.helper.utils.Theme;
+import org.mapleir.dot4j.systems.module.core.Category;
+import org.mapleir.dot4j.systems.module.core.Module;
+import org.mapleir.dot4j.systems.module.core.ModuleManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,16 +23,13 @@ import java.util.List;
 public class ClickGUI extends Screen {
 
     private static final ClickGUI INSTANCE = new ClickGUI();
+    public final List<ModButton> modButtons = new ArrayList<>();
     private final MinecraftClient mc = MinecraftClient.getInstance();
-
-    private float dragX, dragY;
-    private boolean drag = false;
-
+    private final boolean close = false;
     public float windowX = 200, windowY = 200;
     public float width = 500, height = 310;
     public Category selectedCategory = Category.COMBAT;
     public Module selectedModule;
-
     // values for anim
     public float lastPercent;
     public float percent;
@@ -40,21 +37,14 @@ public class ClickGUI extends Screen {
     public float lastPercent2;
     public float outro;
     public float lastOutro;
-
-    private boolean close = false;
-    private boolean closed;
-
-    private double dWheel;
-
-    private float hy = windowY + 40;
-
-    public final List<ModButton> modButtons = new ArrayList<>();
-
     public int coordModX = 0;
-
     public float settingsFieldX;
     public float settingsFNow, settingsF;
-
+    private float dragX, dragY;
+    private boolean drag = false;
+    private boolean closed;
+    private double dWheel;
+    private float hy = windowY + 40;
     private float modScrollEnd, modScrollNow;
 
     private ViewType viewType;
@@ -65,6 +55,10 @@ public class ClickGUI extends Screen {
 
     protected ClickGUI() {
         super(Text.of("klick guei"));
+    }
+
+    public static ClickGUI getINSTANCE() {
+        return INSTANCE;
     }
 
     @Override
@@ -87,7 +81,7 @@ public class ClickGUI extends Screen {
 
         // sets new buttons
         float modY = 70 + modScrollNow;
-        for(Module module : ModuleManager.INSTANCE.getModulesByCategory(selectedCategory)) {
+        for (Module module : ModuleManager.INSTANCE.getModulesByCategory(selectedCategory)) {
             modButtons.add(new ModButton(module, 0, modY, this));
             modY += 40;
         }
@@ -128,12 +122,12 @@ public class ClickGUI extends Screen {
             }
         }
 
-        if(percent <= 1.5 && close) {
+        if (percent <= 1.5 && close) {
             percent = smoothTrans(this.percent, 2);
             percent2 = smoothTrans(this.percent2, 2);
         }
 
-        if(percent >= 1.4  && close) {
+        if (percent >= 1.4 && close) {
             percent = 1.5f;
             closed = true;
             // set ingame focus
@@ -141,7 +135,7 @@ public class ClickGUI extends Screen {
         }
 
         // drags the window
-        if(drag) {
+        if (drag) {
             // update window pos
             if (dragX == 0 && dragY == 0) {
                 dragX = mouseX - windowX;
@@ -165,23 +159,22 @@ public class ClickGUI extends Screen {
         mc.textRenderer.draw(matrices, ClientMain.getName(), (windowX + 20) / 2, (windowY + 20) / 2, -1);
         matrices.pop();
 
-        if(viewType == ViewType.CONFIG) {
+        if (viewType == ViewType.CONFIG) {
 
-            if(transition != null) {
+            if (transition != null) {
                 transition.update(true);
                 RenderUtils.fill(matrices, transition.getValue(), windowY, transition.getEnd() - 19, windowY + height, Theme.WINDOW_COLOR.getRGB());
-                if(transition.hasEnded()) transition = null;
+                if (transition.hasEnded()) transition = null;
             }
 
             configScreen.drawScreen(matrices, mouseX, mouseY, delta);
 
             // back button
-            if(isHovered(windowX + 20, windowY + height - 50, windowX + 20 + 32, windowY + height - 50 + 32, mouseX, mouseY) && configScreen.editConfigMenu == null) {
+            if (isHovered(windowX + 20, windowY + height - 50, windowX + 20 + 32, windowY + height - 50 + 32, mouseX, mouseY) && configScreen.editConfigMenu == null) {
                 matrices.push();
                 RenderUtils.drawTexturedRectangle(matrices, windowX + 20, windowY + height - 50, "textures/back.png");
                 matrices.pop();
-            }
-            else  {
+            } else {
                 matrices.push();
                 RenderSystem.setShader(GameRenderer::getPositionColorProgram);
                 RenderSystem.setShaderColor(0.25f, 0.25f, 0.25f, 1f);
@@ -201,15 +194,14 @@ public class ClickGUI extends Screen {
         //RenderUtils.fill(matrices.peek().getPositionMatrix(), window.getScaledWidth(), window.getScaledHeight(), -window.getScaledWidth(), -window.getScaledHeight(), -1);
 
         // only show categories when no mod is expanded
-        if(selectedModule == null) {
+        if (selectedModule == null) {
 
             // show the cfg icon
-            if(isHovered(windowX + 20, windowY + height - 50, windowX + 20 + 32, windowY + height - 50 + 32, mouseX, mouseY)) {
+            if (isHovered(windowX + 20, windowY + height - 50, windowX + 20 + 32, windowY + height - 50 + 32, mouseX, mouseY)) {
                 matrices.push();
                 RenderUtils.drawTexturedRectangle(matrices, windowX + 20, windowY + height - 50, "textures/config.png");
                 matrices.pop();
-            }
-            else  {
+            } else {
                 matrices.push();
                 RenderSystem.setShader(GameRenderer::getPositionColorProgram);
                 RenderSystem.setShaderColor(0.25f, 0.25f, 0.25f, 1f);
@@ -249,10 +241,10 @@ public class ClickGUI extends Screen {
             }
         }
 
-        if(selectedModule != null) {
+        if (selectedModule != null) {
             // draws field
 
-            RenderUtils.renderRoundedQuad(matrices,windowX + 430 + settingsFieldX, windowY + 60, windowX + width, windowY + height - 20, 5, 20, Theme.SETTINGS_BG);
+            RenderUtils.renderRoundedQuad(matrices, windowX + 430 + settingsFieldX, windowY + 60, windowX + width, windowY + height - 20, 5, 20, Theme.SETTINGS_BG);
             RenderUtils.renderRoundedQuad(matrices, windowX + 430 + settingsFieldX, windowY + 60, windowX + width, windowY + 85, 5, 20, Theme.SETTINGS_HEADER);
 
             mc.textRenderer.draw(matrices, selectedModule.getName(), windowX + 450 + settingsFieldX, windowY + 70, -1);
@@ -292,8 +284,8 @@ public class ClickGUI extends Screen {
 
         // draws the module buttons
         float modY = 70 + modScrollNow;
-        for(ModButton modButton : modButtons) {
-            if(ModuleManager.INSTANCE.getModulesByCategory(selectedCategory).contains(modButton.getModule())) {
+        for (ModButton modButton : modButtons) {
+            if (ModuleManager.INSTANCE.getModulesByCategory(selectedCategory).contains(modButton.getModule())) {
                 modButton.setY(modY);
                 modButton.drawScreen(matrices, mouseX, mouseY, delta);
                 modY += 40;
@@ -301,15 +293,15 @@ public class ClickGUI extends Screen {
         }
         RenderSystem.disableScissor();
 
-        if(transition != null) {
+        if (transition != null) {
             transition.update(true);
             RenderUtils.fill(matrices, transition.getValue(), windowY, transition.getEnd() - 19, windowY + height, Theme.WINDOW_COLOR.getRGB());
-            if(transition.hasEnded()) transition = null;
+            if (transition.hasEnded()) transition = null;
         }
     }
 
     // smoothly transitions between 2 values
-    public float smoothTrans(double current, double last){
+    public float smoothTrans(double current, double last) {
         return (float) (current + (last - current) / (MinecraftClient.getInstance().getCurrentFps() / 10));
     }
 
@@ -322,25 +314,24 @@ public class ClickGUI extends Screen {
         }
 
         // config icon                                                                                                                                                Null check so u can't leave when editing a config
-        if(isHovered(windowX + 20, windowY + height - 50, windowX + 20 + 32, windowY + height - 50 + 32, mouseX, mouseY) && button == 0 && selectedModule == null && configScreen.editConfigMenu == null) {
+        if (isHovered(windowX + 20, windowY + height - 50, windowX + 20 + 32, windowY + height - 50 + 32, mouseX, mouseY) && button == 0 && selectedModule == null && configScreen.editConfigMenu == null) {
             transition = new Animation((int) (windowX - 20), (int) (windowX + width + 20));
-            if(viewType == ViewType.CONFIG) {
+            if (viewType == ViewType.CONFIG) {
                 viewType = ViewType.HOME;
-            }
-            else viewType = ViewType.CONFIG;
+            } else viewType = ViewType.CONFIG;
         }
 
-        if(viewType == ViewType.CONFIG) {
+        if (viewType == ViewType.CONFIG) {
             configScreen.mouseClicked(mouseX, mouseY, button);
             return super.mouseClicked(mouseX, mouseY, button);
         }
 
         // when cateogry is deleted
         float cateY = windowY + 65;
-        for(Category category : Category.values()) {
+        for (Category category : Category.values()) {
             if (isHovered(windowX, cateY - 8, windowX + 50, cateY + mc.textRenderer.fontHeight + 8, mouseX, mouseY) && button == 0) {
                 // sets the new underline position
-                if(category == selectedCategory) {
+                if (category == selectedCategory) {
                     hy = cateY;
                 }
 
@@ -352,7 +343,7 @@ public class ClickGUI extends Screen {
                 // updates buttons to match new category
                 modButtons.clear();
                 float modY = 70 + modScrollNow;
-                for(Module module : ModuleManager.INSTANCE.getModulesByCategory(selectedCategory)) {
+                for (Module module : ModuleManager.INSTANCE.getModulesByCategory(selectedCategory)) {
                     modButtons.add(new ModButton(module, 0, modY, this));
                     modY += 40;
                 }
@@ -362,8 +353,8 @@ public class ClickGUI extends Screen {
         }
 
         // mouse clicked hook for the buttons
-        for(ModButton modButton : modButtons) {
-            if(ModuleManager.INSTANCE.getModulesByCategory(selectedCategory).contains(modButton.getModule())) {
+        for (ModButton modButton : modButtons) {
+            if (ModuleManager.INSTANCE.getModulesByCategory(selectedCategory).contains(modButton.getModule())) {
                 modButton.mouseClicked(mouseX, mouseY, button);
             }
         }
@@ -377,13 +368,13 @@ public class ClickGUI extends Screen {
         // stop dragging
         drag = false;
 
-        if(viewType == ViewType.CONFIG) {
+        if (viewType == ViewType.CONFIG) {
             configScreen.mouseReleased(mouseX, mouseY, button);
             return super.mouseReleased(mouseX, mouseY, button);
         }
 
-        for(ModButton modButton : modButtons) {
-            if(ModuleManager.INSTANCE.getModulesByCategory(selectedCategory).contains(modButton.getModule())) {
+        for (ModButton modButton : modButtons) {
+            if (ModuleManager.INSTANCE.getModulesByCategory(selectedCategory).contains(modButton.getModule())) {
                 modButton.mouseReleased(mouseX, mouseY, button);
             }
         }
@@ -395,14 +386,15 @@ public class ClickGUI extends Screen {
     public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
 
         // set scroll value
-        if(isHovered(windowX + 100 + settingsFieldX, windowY + 60, windowX + 425 + settingsFieldX, windowY + height, mouseX, mouseY)) this.dWheel = amount;
+        if (isHovered(windowX + 100 + settingsFieldX, windowY + 60, windowX + 425 + settingsFieldX, windowY + height, mouseX, mouseY))
+            this.dWheel = amount;
 
         return super.mouseScrolled(mouseX, mouseY, amount);
     }
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        for(ModButton mb : modButtons) {
+        for (ModButton mb : modButtons) {
             mb.keyPressed(keyCode, scanCode, modifiers);
         }
         configScreen.keyPressed(keyCode, scanCode, modifiers);
@@ -412,7 +404,7 @@ public class ClickGUI extends Screen {
 
     @Override
     public boolean charTyped(char chr, int modifiers) {
-        for(ModButton mb : modButtons) {
+        for (ModButton mb : modButtons) {
             mb.charTyped(chr, modifiers);
         }
         configScreen.charTyped(chr, modifiers);
@@ -437,9 +429,5 @@ public class ClickGUI extends Screen {
 
     public boolean isHovered(float x, float y, float x2, float y2, double mouseX, double mouseY) {
         return mouseX >= x && mouseX <= x2 && mouseY >= y && mouseY <= y2;
-    }
-
-    public static ClickGUI getINSTANCE() {
-        return INSTANCE;
     }
 }

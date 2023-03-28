@@ -2,23 +2,23 @@ package org.mapleir.dot4j.systems.module.impl.client;
 
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
-import org.mapleir.dot4j.helper.utils.RenderUtils;
-import org.mapleir.dot4j.systems.module.core.Category;
-import org.mapleir.dot4j.systems.module.core.Module;
 import org.mapleir.dot4j.gui.setting.BooleanSetting;
 import org.mapleir.dot4j.gui.setting.ModeSetting;
 import org.mapleir.dot4j.gui.setting.NumberSetting;
+import org.mapleir.dot4j.systems.module.core.Category;
+import org.mapleir.dot4j.systems.module.core.Module;
 import org.mapleir.dot4j.systems.module.core.ModuleManager;
 
-import java.awt.*;
 import java.util.Comparator;
 import java.util.List;
+
 @Module.Info(name = "Arraylist", description = "Enabled modules", category = Category.CLIENT)
 
 public class Arraylist extends Module {
     public BooleanSetting show = new BooleanSetting("Enabled", true);
     public ModeSetting mode = new ModeSetting("Mode", "Asolfo", "Asolfo", "White");
     public NumberSetting rainbowspeed = new NumberSetting("Rainbow speed", 1, 8, 4, 1);
+
     public Arraylist() {
         addSettings(show, mode, rainbowspeed);
     }
@@ -42,7 +42,7 @@ public class Arraylist extends Module {
         int sWidth = mc.getWindow().getScaledWidth();
 
         List<Module> enabled = ModuleManager.INSTANCE.getEnabledModules();
-        enabled.sort(Comparator.comparingInt(m -> (int) mc.textRenderer.getWidth(((Module) m).getDisplayName())).reversed());
+        enabled.sort(Comparator.comparingInt(m -> mc.textRenderer.getWidth(((Module) m).getDisplayName())).reversed());
 
         for (Module mod : enabled) {
             int fWidth = mc.textRenderer.getWidth(mod.getDisplayName());
@@ -65,7 +65,7 @@ public class Arraylist extends Module {
             if (index == enabled.size() - 1) {
                 DrawableHelper.fill(matrices, fromX + xOffset, toY + yOffset, sWidth + xOffset, toY + 1 + yOffset, -1);
             }
-            if (index == enabled.size() - enabled.size()) {
+            if (index == 0) {
                 DrawableHelper.fill(matrices, fromX - 1 + xOffset, fromY + yOffset, sWidth + xOffset, fromY + 1 + yOffset, -1);
             } else {
                 DrawableHelper.fill(matrices, fromX + xOffset, fromY + yOffset, toX - lastWidth - 4 + xOffset, fromY + 1 + yOffset, -1);

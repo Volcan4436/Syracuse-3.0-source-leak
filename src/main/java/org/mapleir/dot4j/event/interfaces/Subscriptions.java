@@ -11,7 +11,7 @@ public class Subscriptions {
     public static final List<ISubWorldRenderEnd> WORLD_RENDER_END = new ArrayList<>();
 
     public static void addSub(ISubscription s) {
-        if(s instanceof ISubWorldRenderEnd) {
+        if (s instanceof ISubWorldRenderEnd) {
             WORLD_RENDER_END.add((ISubWorldRenderEnd) s);
         }
     }
