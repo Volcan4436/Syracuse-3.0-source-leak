@@ -1,8 +1,6 @@
 package org.mapleir.dot4j.systems.auth;
 
-import java.io.IOException;
 import java.net.*;
-import java.util.ArrayList;
 import java.util.Enumeration;
 
 public class IntegrityD {

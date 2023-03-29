@@ -1,6 +1,5 @@
 package org.mapleir.dot4j.systems.module.impl.misc;
 
-import org.mapleir.dot4j.gui.clickgui.ClickGUI;
 import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
 import org.mapleir.dot4j.systems.module.core.ModuleManager;

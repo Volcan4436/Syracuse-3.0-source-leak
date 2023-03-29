@@ -21,8 +21,7 @@ public abstract class ClientBrandRetrieverMixin {
             List<Setting> settings = ModuleManager.INSTANCE.getModuleByClass(Spoofer.class).getSettings();
             if (!settings.isEmpty()) {
                 Setting setting = settings.get(0);
-                if (setting instanceof ModeSetting) {
-                    ModeSetting modeSetting = (ModeSetting) setting;
+                if (setting instanceof ModeSetting modeSetting) {
                     switch (modeSetting.getMode()) {
                         case "Vanilla":
                         case "Fabric":

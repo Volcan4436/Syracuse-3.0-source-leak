@@ -2,7 +2,7 @@ package org.mapleir.dot4j.gui.setting;
 
 public class Setting {
 
-    private String name;
+    private final String name;
     private boolean visible = true;
 
     public Setting(String name) {

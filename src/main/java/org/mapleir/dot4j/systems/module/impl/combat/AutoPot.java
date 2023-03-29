@@ -10,16 +10,16 @@ import org.mapleir.dot4j.systems.module.core.Module;
 @Module.Info(name = "AutoPot", description = "Pots you automatically", category = Category.COMBAT)
 public class AutoPot extends Module {
 
-    NumberSetting health = new NumberSetting("Health", 1, 19,8,1);
+    NumberSetting health = new NumberSetting("Health", 1, 19, 8, 1);
     NumberSetting delay = new NumberSetting("Delay", 2, 20, 10, 1);
-
-    public AutoPot() {
-        addSettings(health, delay);
-    }
     Float prevPitch;
     int potSlot;
     int preSlot;
     int ticksAfterPotion = 0;
+
+    public AutoPot() {
+        addSettings(health, delay);
+    }
 
     @Override
     public void onTick() {

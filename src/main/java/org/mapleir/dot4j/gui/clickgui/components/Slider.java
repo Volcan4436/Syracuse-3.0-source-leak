@@ -1,16 +1,17 @@
 package org.mapleir.dot4j.gui.clickgui.components;
 
+import net.minecraft.client.util.math.MatrixStack;
 import org.mapleir.dot4j.gui.clickgui.ClickGUI;
 import org.mapleir.dot4j.gui.setting.NumberSetting;
 import org.mapleir.dot4j.helper.utils.RenderUtils;
 import org.mapleir.dot4j.helper.utils.Theme;
-import net.minecraft.client.util.math.MatrixStack;
 
 public class Slider extends Component {
 
     private final NumberSetting setting;
     private final ClickGUI parent;
-    private float x, y;
+    private final float x;
+    private float y;
     private boolean dragging = false;
 
     public Slider(NumberSetting setting, float x, float y, ClickGUI parent) {
@@ -28,10 +29,9 @@ public class Slider extends Component {
                 / (setting.getMax() - setting.getMin()));
 
         // setting name
-        if(dragging) {
+        if (dragging) {
             mc.textRenderer.draw(matrices, setting.getName(), parent.windowX + 445 + parent.settingsFieldX, y + 5, -1);
-        }
-        else {
+        } else {
             mc.textRenderer.draw(matrices, setting.getName(), parent.windowX + 445 + parent.settingsFieldX, y + 5, Theme.MODULE_TEXT.getRGB());
         }
 
@@ -42,7 +42,7 @@ public class Slider extends Component {
         // the slider aka --------
         RenderUtils.renderRoundedQuad(matrices, x + parent.windowX + 450 + parent.settingsFieldX, y + 20, x + parent.windowX + 450 + parent.settingsFieldX + present, y + 21.5f, 1, 20, Theme.ENABLED);
 
-        if(dragging) {
+        if (dragging) {
             float render2 = (float) setting.getMin();
             double max = setting.getMax();
             double inc = 0.1;
@@ -58,7 +58,7 @@ public class Slider extends Component {
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
-        if(isHovered(x + parent.windowX + 450 + parent.settingsFieldX, y + 18, x + parent.windowX + parent.width - 11, y + 23.5f, mouseX, mouseY)) {
+        if (isHovered(x + parent.windowX + 450 + parent.settingsFieldX, y + 18, x + parent.windowX + parent.width - 11, y + 23.5f, mouseX, mouseY)) {
             dragging = true;
         }
     }

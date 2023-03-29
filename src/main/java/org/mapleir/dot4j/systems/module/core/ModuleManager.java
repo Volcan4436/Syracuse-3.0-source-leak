@@ -18,9 +18,8 @@ import java.util.List;
 
 public class ModuleManager {
 
-    private List<Module> modules = new ArrayList<>();
-
     public static final ModuleManager INSTANCE = new ModuleManager();
+    private List<Module> modules = new ArrayList<>();
 
     public ModuleManager() {
         init();
@@ -67,7 +66,7 @@ public class ModuleManager {
 
     public void add(Module m) {
         modules.add(m);
-        if(m instanceof ISubscription) {
+        if (m instanceof ISubscription) {
             Subscriptions.addSub((ISubscription) m);
         }
     }
@@ -80,10 +79,14 @@ public class ModuleManager {
         return modules;
     }
 
-    public Module getModuleByName(String name){
+    public void setModules(List<Module> modules) {
+        this.modules = modules;
+    }
 
-        for(Module module : modules) {
-            if(module.getName().equals(name)) return module;
+    public Module getModuleByName(String name) {
+
+        for (Module module : modules) {
+            if (module.getName().equals(name)) return module;
         }
 
         return null;
@@ -91,8 +94,8 @@ public class ModuleManager {
 
     public ArrayList<Module> getModulesByCategory(Category category) {
         ArrayList<Module> modules = new ArrayList<>();
-        for(Module m : this.modules){
-            if(m.getCategory().equals(category)){
+        for (Module m : this.modules) {
+            if (m.getCategory().equals(category)) {
                 modules.add(m);
             }
         }
@@ -111,16 +114,12 @@ public class ModuleManager {
 
     public List<Module> getEnabledModules() {
         List<Module> enabled = new ArrayList<>();
-        for(Module m : getModules()) {
-            if(m.isEnabled()) {
+        for (Module m : getModules()) {
+            if (m.isEnabled()) {
                 enabled.add(m);
             }
         }
 
         return enabled;
-    }
-
-    public void setModules(List<Module> modules) {
-        this.modules = modules;
     }
 }

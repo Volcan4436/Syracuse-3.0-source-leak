@@ -43,7 +43,7 @@ public class AutoCrystal extends Module {
             Vec3d rotationVec = mc.player.getRotationVec(0F);
             Vec3d targetPos = cameraPos.add(rotationVec.multiply(4.5D));
             BlockHitResult hit = mc.world.raycast(new RaycastContext(cameraPos, targetPos, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player));
-            if (hit.getType() == HitResult.Type.BLOCK && CrystalUtils.canPlaceCrystal(hit.getBlockPos()) && (Blocks.OBSIDIAN == mc.world.getBlockState(hit.getBlockPos()).getBlock() || Blocks.BEDROCK == mc.world.getBlockState(hit.getBlockPos()).getBlock()) && (mc.player.getMainHandStack().isOf(Items.END_CRYSTAL))) {
+            if (hit.getType() == HitResult.Type.BLOCK && CrystalUtils.canPlaceCrystalServer(hit.getBlockPos()) && (Blocks.OBSIDIAN == mc.world.getBlockState(hit.getBlockPos()).getBlock() || Blocks.BEDROCK == mc.world.getBlockState(hit.getBlockPos()).getBlock()) && (mc.player.getMainHandStack().isOf(Items.END_CRYSTAL))) {
                 ActionResult result = mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
                 if (result.isAccepted() && result.shouldSwingHand()) {
                     mc.player.swingHand(Hand.MAIN_HAND);

@@ -18,8 +18,14 @@ public class HUD extends Module {
 
 
     public HUD() {
-        addSettings(rgb,fps, hp, xyz, username, direction);
+        addSettings(rgb, fps, hp, xyz, username, direction);
     }
+
+    public static int getRainbow(float sat, float bri, double speed, int offset) {
+        double rainbowState = Math.ceil((System.currentTimeMillis() + offset) / speed) % 360;
+        return 0xff000000 | MathHelper.hsvToRgb((float) (rainbowState / 360.0), sat, bri);
+    }
+
     @Override
     public void draw(MatrixStack matrices) {
         if (rgb.isEnabled()) {
@@ -57,10 +63,5 @@ public class HUD extends Module {
             mc.player.getMovementDirection();
             mc.textRenderer.drawWithShadow(matrices, "Direction: " + mc.player.getMovementDirection(), 2, 20 + mc.textRenderer.fontHeight * 4, -1);
         }
-    }
-
-    public static int getRainbow(float sat, float bri, double speed, int offset) {
-        double rainbowState = Math.ceil((System.currentTimeMillis() + offset) / speed) % 360;
-        return 0xff000000 | MathHelper.hsvToRgb((float) (rainbowState / 360.0), sat, bri);
     }
 }

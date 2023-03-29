@@ -16,11 +16,6 @@ import static org.objectweb.asm.Opcodes.*;
 public class AntiDump {
 
     private static final Unsafe unsafe;
-    private static Method findNative;
-    private static ClassLoader classLoader;
-
-    private static boolean ENABLE;
-
     private static final String[] naughtyFlags = {
             "-XBootclasspath",
             "-javaagent",
@@ -35,6 +30,9 @@ public class AntiDump {
             "-Djavax.net.ssl.trustStore",
             "-Djavax.net.ssl.trustStorePassword"
     };
+    private static Method findNative;
+    private static ClassLoader classLoader;
+    private static boolean ENABLE;
 
     /* UnsafeProvider */
     static {
@@ -126,7 +124,8 @@ public class AntiDump {
     private static void dumpDetected() {
         try {
             unsafe.putAddress(0, 0);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         Error error = new Error();
         error.setStackTrace(new StackTraceElement[]{});
         throw error;
@@ -154,7 +153,8 @@ public class AntiDump {
             Class<?> cls = ClassLoader.getSystemClassLoader().loadClass("jdk.internal.module.IllegalAccessLogger");
             Field logger = cls.getDeclaredField("logger");
             unsafe.putObjectVolatile(cls, unsafe.staticFieldOffset(logger), null);
-        } catch (Throwable t) {}
+        } catch (Throwable t) {
+        }
 
         findNative.setAccessible(true);
     }

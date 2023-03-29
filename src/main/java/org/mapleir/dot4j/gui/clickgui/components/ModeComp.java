@@ -1,16 +1,17 @@
 package org.mapleir.dot4j.gui.clickgui.components;
 
+import net.minecraft.client.util.math.MatrixStack;
 import org.mapleir.dot4j.gui.clickgui.ClickGUI;
 import org.mapleir.dot4j.gui.setting.ModeSetting;
 import org.mapleir.dot4j.helper.utils.RenderUtils;
 import org.mapleir.dot4j.helper.utils.Theme;
-import net.minecraft.client.util.math.MatrixStack;
 
 public class ModeComp extends Component {
 
     private final ModeSetting setting;
     private final ClickGUI parent;
-    private float x, y;
+    private final float x;
+    private float y;
 
     public ModeComp(ModeSetting setting, ClickGUI parent, float x, float y) {
         this.setting = setting;
@@ -30,7 +31,7 @@ public class ModeComp extends Component {
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
 
-        if(isHovered(x + parent.windowX + 445 + parent.settingsFieldX, y + 2, x + parent.windowX + parent.width - 5, y + 22, mouseX, mouseY) && button == 0) {
+        if (isHovered(x + parent.windowX + 445 + parent.settingsFieldX, y + 2, x + parent.windowX + parent.width - 5, y + 22, mouseX, mouseY) && button == 0) {
             setting.cycle();
         }
     }

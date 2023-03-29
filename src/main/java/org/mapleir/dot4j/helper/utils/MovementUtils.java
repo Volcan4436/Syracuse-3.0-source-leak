@@ -19,11 +19,7 @@ public class MovementUtils {
     }
 
     public static boolean test() {
-        if (mc.options.forwardKey.isPressed() || mc.options.backKey.isPressed() || mc.options.leftKey.isPressed() || mc.options.rightKey.isPressed()) {
-            return true;
-        } else {
-            return false;
-        }
+        return mc.options.forwardKey.isPressed() || mc.options.backKey.isPressed() || mc.options.leftKey.isPressed() || mc.options.rightKey.isPressed();
     }
 
     public static boolean isMoving() {

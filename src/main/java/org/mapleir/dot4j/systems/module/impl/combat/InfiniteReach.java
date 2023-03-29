@@ -1,12 +1,5 @@
 package org.mapleir.dot4j.systems.module.impl.combat;
 
-import org.mapleir.dot4j.event.EventTarget;
-import org.mapleir.dot4j.event.impl.EventUpdate;
-import org.mapleir.dot4j.event.impl.HandSwingEvent;
-import org.mapleir.dot4j.systems.module.core.Category;
-import org.mapleir.dot4j.systems.module.core.Module;
-import org.mapleir.dot4j.gui.setting.NumberSetting;
-import org.mapleir.dot4j.helper.utils.PacketHelper;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -19,8 +12,16 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import org.mapleir.dot4j.event.EventTarget;
+import org.mapleir.dot4j.event.impl.EventUpdate;
+import org.mapleir.dot4j.event.impl.HandSwingEvent;
+import org.mapleir.dot4j.gui.setting.NumberSetting;
+import org.mapleir.dot4j.helper.utils.PacketHelper;
+import org.mapleir.dot4j.systems.module.core.Category;
+import org.mapleir.dot4j.systems.module.core.Module;
 
 import java.util.function.Predicate;
+
 @Module.Info(name = "InfiniteReach", description = "Up to 100 blocks of reach", category = Category.COMBAT)
 
 public class InfiniteReach extends Module {
@@ -32,14 +33,14 @@ public class InfiniteReach extends Module {
 
     @EventTarget
     public void onUpdate(final EventUpdate e) {
-        if(mc.options.useKey.wasPressed()) {
+        if (mc.options.useKey.wasPressed()) {
 
             BlockHitResult hit = getTargetBlock((int) maxDistance.getValue());
             BlockPos block = hit.getBlockPos();
 
             Block target = mc.world.getBlockState(block).getBlock();
 
-            if(!(target instanceof ChestBlock || target instanceof EnderChestBlock || target instanceof BarrelBlock || target instanceof ShulkerBoxBlock)) {
+            if (!(target instanceof ChestBlock || target instanceof EnderChestBlock || target instanceof BarrelBlock || target instanceof ShulkerBoxBlock)) {
                 return;
             }
 
@@ -49,7 +50,7 @@ public class InfiniteReach extends Module {
             Vec3d playerPos = mc.player.getPos();
             double targetDist = targetDistance(playerPos, block_pos);
 
-            if(targetDist > 5) {
+            if (targetDist > 5) {
                 tpTo(playerPos, block_pos);
                 PlayerInteractBlockC2SPacket packet = new PlayerInteractBlockC2SPacket(mc.player.preferredHand, hit, 1);
                 PacketHelper.sendPacket(packet);
@@ -62,13 +63,12 @@ public class InfiniteReach extends Module {
 
     @EventTarget
     public void onSwing(final HandSwingEvent e) {
-        if(mc.options.attackKey.isPressed()) {
+        if (mc.options.attackKey.isPressed()) {
             Entity target = getTarget((int) maxDistance.getValue());
 
-            if(target == null || target.getType().equals(EntityType.ITEM) || target.getType().equals(EntityType.EXPERIENCE_ORB)) {
+            if (target == null || target.getType().equals(EntityType.ITEM) || target.getType().equals(EntityType.EXPERIENCE_ORB)) {
                 return;
-            }
-            else {
+            } else {
                 setDisplayName(target.getName().getString());
             }
 
@@ -89,7 +89,7 @@ public class InfiniteReach extends Module {
     private void tpTo(Vec3d from, Vec3d to) {
         double distancePerBlink = 8.0;
         double targetDistance = Math.ceil(from.distanceTo(to) / distancePerBlink);
-        for(int i = 1; i <= targetDistance; i++) {
+        for (int i = 1; i <= targetDistance; i++) {
             Vec3d tempPos = from.lerp(to, i / targetDistance);
             PacketHelper.sendPosition(tempPos);
         }
@@ -108,7 +108,7 @@ public class InfiniteReach extends Module {
         Box box = entity2.getBoundingBox().stretch(vec3d2).expand(1.0);
         EntityHitResult entityHitResult = ProjectileUtil.raycast(entity2, eyePos, vec3d3, box, predicate, max * max);
 
-        if(entityHitResult == null) return null;
+        if (entityHitResult == null) return null;
 
         Entity res = entityHitResult.getEntity();
 
@@ -117,7 +117,7 @@ public class InfiniteReach extends Module {
 
     public BlockHitResult getTargetBlock(int max) {
         HitResult hitResult = mc.cameraEntity.raycast(max, mc.getTickDelta(), false);
-        if(hitResult instanceof BlockHitResult hit) {
+        if (hitResult instanceof BlockHitResult hit) {
             return hit;
         }
 

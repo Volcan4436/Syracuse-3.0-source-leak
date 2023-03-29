@@ -12,8 +12,8 @@ public class WorldRenderEndEvent {
     }
 
     private static void dispatchEnd(WorldRenderContext ctx) {
-        for(ISubWorldRenderEnd iswre : Subscriptions.WORLD_RENDER_END) {
-            if(iswre instanceof IDispatch d && !d.shouldDispatch()) continue;
+        for (ISubWorldRenderEnd iswre : Subscriptions.WORLD_RENDER_END) {
+            if (iswre instanceof IDispatch d && !d.shouldDispatch()) continue;
             iswre.onWorldRenderEnd(ctx);
         }
     }

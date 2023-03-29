@@ -5,7 +5,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -119,12 +118,13 @@ public class RenderUtils {
 
     /**
      * Draws a cirlce
+     *
      * @param matrices ...
-     * @param centerX CenterX of the Circle
-     * @param centerY CenterY of the circle
-     * @param radius "Bigness" of the circle
-     * @param samples How many pixels should be used
-     * @param color Color
+     * @param centerX  CenterX of the Circle
+     * @param centerY  CenterY of the circle
+     * @param radius   "Bigness" of the circle
+     * @param samples  How many pixels should be used
+     * @param color    Color
      */
     public static void drawCircle(MatrixStack matrices, double centerX, double centerY, double radius, double samples, int color) {
         float alpha = (float) (color >> 24 & 255) / 255.0F;
@@ -162,11 +162,12 @@ public class RenderUtils {
     }
 
     /**
-     *  Draws an image at specified coords
+     * Draws an image at specified coords
+     *
      * @param matrices The gl context to draw with
-     * @param x X pos
-     * @param y y pos
-     * @param path Path to the image
+     * @param x        X pos
+     * @param y        y pos
+     * @param path     Path to the image
      */
     public static void drawTexturedRectangle(MatrixStack matrices, float x, float y, String path) {
         // Bind the texture

@@ -12,6 +12,7 @@ public class Step extends Module {
     public Step() {
         addSettings(height);
     }
+
     @Override
     public void onTick() {
         mc.player.stepHeight = height.getFloatValue();

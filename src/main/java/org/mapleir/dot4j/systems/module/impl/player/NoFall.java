@@ -27,16 +27,16 @@ public class NoFall extends Module {
 
         double pos = mc.player.getY();
 
-         double distanceToGround = getDistanceToGround(mc.player);
+        double distanceToGround = getDistanceToGround(mc.player);
 
         if (mode.isMode("Vulcan")) {
             if (distanceToGround >= distance.getFloatValue() && !hasCancelledFallDamage) {
                 mc.player.updatePosition(mc.player.getX(), mc.player.getY() + 0.1, mc.player.getZ());
                 hasCancelledFallDamage = true;
             }
-         if (distanceToGround < distance.getFloatValue()) {
-             hasCancelledFallDamage = false;
-         }
+            if (distanceToGround < distance.getFloatValue()) {
+                hasCancelledFallDamage = false;
+            }
         }
     }
 

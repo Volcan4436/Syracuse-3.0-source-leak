@@ -22,10 +22,9 @@ public class Animation {
     public void update(boolean cast, float speed) {
         if (current != end) {
             current += ((end - current) / speed);
-            if(cast) current = (int) current;
-            if(Math.round(current) == end) current = end;
-        }
-        else done = true;
+            if (cast) current = (int) current;
+            if (Math.round(current) == end) current = end;
+        } else done = true;
     }
 
     public boolean hasEnded() {
@@ -36,12 +35,12 @@ public class Animation {
         return current;
     }
 
-    public float getEnd() {
-        return end;
-    }
-
     public void setValue(float current) {
         this.current = current;
+    }
+
+    public float getEnd() {
+        return end;
     }
 
     public void setEnd(float end) {
