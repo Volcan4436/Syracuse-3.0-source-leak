@@ -4,6 +4,7 @@
   "package": "org.mapleir.dot4j.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ResourcePackSendS2CPacketMixin"
   ],
   "client": [
     "ClientBrandRetrieverMixin",
@@ -16,6 +17,7 @@
     "InGameHudMixin",
     "KeyboardMixin",
     "MinecraftClientMixin",
+    "ServerResourcePackProviderMixin",
     "WorldRendererMixin"
   ],
   "injectors": {
