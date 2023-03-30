@@ -85,13 +85,14 @@ public class ModuleManager {
     }
 
     public Module getModuleByName(String name) {
-
         for (Module module : modules) {
-            if (module.getName().equals(name)) return module;
+            if (module.getName().toLowerCase().equals(name.toLowerCase())) return module;
         }
 
         return null;
     }
+
+
 
     public ArrayList<Module> getModulesByCategory(Category category) {
         ArrayList<Module> modules = new ArrayList<>();

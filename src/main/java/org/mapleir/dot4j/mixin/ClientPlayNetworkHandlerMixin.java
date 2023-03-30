@@ -30,18 +30,18 @@ public abstract class ClientPlayNetworkHandlerMixin {
     // TODO: make a randomized prefix and make the rnadomized string prefix thing in gui
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     public void sendChatMessage(String msg, CallbackInfo ci) {
-
+        String message = msg.toLowerCase();
         StringBuilder CMD = new StringBuilder();
-        for (int i = 1; i < msg.toCharArray().length; ++i) {
-            CMD.append(msg.toCharArray()[i]);
+        for (int i = 1; i < message.toCharArray().length; ++i) {
+            CMD.append(message.toCharArray()[i]);
         }
         String[] args = CMD.toString().split(" ");
 
-        if (msg.startsWith(ClientMain.getCommandPrefix())) {
+        if (message.startsWith(ClientMain.getCommandPrefix())) {
+            ci.cancel();
             for (Command command : CommandManager.INSTANCE.getCmds()) {
                 if (args[0].equalsIgnoreCase(command.getName())) {
-                    command.onCmd(msg, args);
-                    ci.cancel();
+                    command.onCmd(message, args);
                     break;
                 }
             }
