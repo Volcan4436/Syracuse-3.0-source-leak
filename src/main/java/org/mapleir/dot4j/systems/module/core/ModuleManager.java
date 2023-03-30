@@ -9,6 +9,7 @@ import org.mapleir.dot4j.systems.module.impl.combat.*;
 import org.mapleir.dot4j.systems.module.impl.misc.Plugins;
 import org.mapleir.dot4j.systems.module.impl.misc.SelfDestruct;
 import org.mapleir.dot4j.systems.module.impl.movement.*;
+import org.mapleir.dot4j.systems.module.impl.player.Criticals;
 import org.mapleir.dot4j.systems.module.impl.player.NoFall;
 import org.mapleir.dot4j.systems.module.impl.player.NoSlow;
 import org.mapleir.dot4j.systems.module.impl.render.ESP;
@@ -33,13 +34,13 @@ public class ModuleManager {
         add(new HUD());
 
         // COMBAT MODULES
-        add(new AutoPot());
-        add(new InfiniteReach());
-        add(new AutoCrystal());
         add(new AimAssist());
+        add(new AutoCrystal());
+        add(new AutoPot());
         add(new AutoStun());
+        add(new Criticals());
         add(new Hitboxes());
-        add(new Triggerbot());
+        add(new InfiniteReach());
         add(new Reach());
         add(new KillAura());
 

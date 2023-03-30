@@ -167,6 +167,7 @@ public class KillAura extends Module {
     }
 
     private void performHit(final LivingEntity e) {
+
         if (stopSprint.isEnabled()) {
             if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_SEMICOLON)) {
                 if (MovementUtils.isMoving()) {
@@ -179,8 +180,9 @@ public class KillAura extends Module {
         }
 
 
-
-        mc.interactionManager.attackEntity(mc.player, e);
+        if (canHit()) {
+            mc.interactionManager.attackEntity(mc.player, e);
+        }
         //((IClientPlayerInteractionManager) mc.interactionManager).syncSelected().syncSelectedSlot();
 
         //mc.player.networkHandler.sendPacket(new PlayerInteractEntityC2SPacket(target, mc.player.isSneaking()));

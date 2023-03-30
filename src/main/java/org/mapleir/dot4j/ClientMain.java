@@ -23,6 +23,7 @@ public class ClientMain implements ModInitializer {
     private static final String commandPrefix = "#";
 
     public static Config selectedConfig;
+    public boolean isSelfDestucted = false;
 
     public static ClientMain getINSTANCE() {
         return INSTANCE;
