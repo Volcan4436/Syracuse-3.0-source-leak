@@ -2,6 +2,7 @@ package org.mapleir.dot4j.systems.module.core;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.network.Packet;
 import net.minecraft.text.Text;
 import org.mapleir.dot4j.event.EventManager;
 import org.mapleir.dot4j.gui.setting.BooleanSetting;
@@ -158,6 +159,15 @@ public abstract class Module {
     protected void sendMsg(String message) {
         if (mc.player == null) return;
         mc.player.sendMessage(Text.of(message.replace("&", "§")));
+    }
+
+    public void send(final Packet<?> packetIn)
+    {
+        if (packetIn == null)
+        {
+            return;
+        }
+        Objects.requireNonNull(mc.getNetworkHandler()).getConnection().send(packetIn);
     }
 
     @Retention(RetentionPolicy.RUNTIME)

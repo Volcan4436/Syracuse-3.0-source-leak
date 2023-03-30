@@ -41,6 +41,7 @@ public class ModuleManager {
         add(new Hitboxes());
         add(new Triggerbot());
         add(new Reach());
+        add(new KillAura());
 
         // MOVEMENT MODULES
         add(new Speed());

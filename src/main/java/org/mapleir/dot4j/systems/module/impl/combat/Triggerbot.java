@@ -48,6 +48,10 @@ public class Triggerbot extends Module {
 
     private Entity target;
 
+    public void TriggerBot() {
+        addSettings(mode, hitCooldown, critDistance, autoCrit, block, players, animals, monsters, villagers, invisibles);
+    }
+
     private static double randomizeCooldown() {
         double min = 0.86;
         double max = 0.99;
@@ -96,7 +100,7 @@ public class Triggerbot extends Module {
             //if (mc.crosshairTarget instanceof EntityHitResult) {
             //final EntityHitResult entityResult = ((EntityHitResult) mc.crosshairTarget);
             if (mc.crosshairTarget instanceof final EntityHitResult entityResult) {
-                if (this.isValidEntity(entityResult.getEntity())) {
+                if (!this.isValidEntity(entityResult.getEntity())) {
                     return;
                 }
                 if (mc.player.isOnGround() || mc.player.fallDistance >= critDistance.getFloatValue() || this.hasFlyUtilities()) {
