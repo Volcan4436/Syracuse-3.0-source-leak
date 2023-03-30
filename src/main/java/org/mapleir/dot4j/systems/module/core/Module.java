@@ -161,15 +161,6 @@ public abstract class Module {
         mc.player.sendMessage(Text.of(message.replace("&", "§")));
     }
 
-    public void send(final Packet<?> packetIn)
-    {
-        if (packetIn == null)
-        {
-            return;
-        }
-        Objects.requireNonNull(mc.getNetworkHandler()).getConnection().send(packetIn);
-    }
-
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
     public @interface Info {

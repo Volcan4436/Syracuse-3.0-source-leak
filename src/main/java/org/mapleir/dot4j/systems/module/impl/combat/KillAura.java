@@ -14,8 +14,8 @@ import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.SwordItem;
+import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
-import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameMode;
@@ -28,15 +28,12 @@ import org.mapleir.dot4j.gui.setting.NumberSetting;
 import org.mapleir.dot4j.helper.utils.EntityUtils;
 import org.mapleir.dot4j.helper.utils.MathUtil;
 import org.mapleir.dot4j.helper.utils.MovementUtils;
+import org.mapleir.dot4j.systems.module.core.Category;
 import org.mapleir.dot4j.systems.module.core.Module;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
-import static net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send;
-
+@Module.Info(name = "KillAura", description = "hit player", category = Category.COMBAT)
 public class KillAura extends Module {
 
     public ModeSetting items = new ModeSetting("items", "Sword", "Sword", "Axe", "Pickaxe", "Shovel", "Any", "All");
@@ -56,7 +53,16 @@ public class KillAura extends Module {
     public static List<LivingEntity> targets = new LinkedList<>();
     public static Entity target = null;
 
+    public KillAura() {
+        addSettings(items, priority, range, fov, cooldown, critDistance, stopSprint, noSwing, players, animals, monsters, villagers, invisibles);
+    }
 
+    public void send(final Packet<?> packetIn) {
+        if (packetIn == null) {
+            return;
+        }
+        Objects.requireNonNull(mc.getNetworkHandler()).getConnection().send(packetIn);
+    }
     @Override
     public void onDisable() {
         if (targets != null) {
