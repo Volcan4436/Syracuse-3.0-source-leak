@@ -2,6 +2,7 @@ package org.mapleir.dot4j.helper.utils;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.util.math.BlockPos;
@@ -14,56 +15,51 @@ import static org.mapleir.dot4j.helper.utils.SyraMC.mc;
 public enum CrystalUtils {
     ;
 
-    public static boolean canPlaceCrystalServer(BlockPos block) {
-        BlockState blockState = mc.world.getBlockState(block);
-        if (!blockState.isOf(Blocks.OBSIDIAN) && !blockState.isOf(Blocks.BEDROCK))
+    public static boolean canPlaceCrystalServer(BlockPos pos) {
+        if (mc.world == null) return false;
+
+        BlockState state = mc.world.getBlockState(pos);
+        if (state.getBlock() != Blocks.OBSIDIAN && state.getBlock() != Blocks.BEDROCK) {
             return false;
-        BlockPos blockPos2 = block.up();
-        if (!mc.world.isAir(blockPos2))
+        }
+
+        BlockPos crystalPos = pos.up();
+        BlockState crystalState = mc.world.getBlockState(crystalPos);
+        if (!mc.world.isAir(crystalPos) || crystalState.getBlock() == Blocks.OBSIDIAN || crystalState.getBlock() == Blocks.BEDROCK) {
             return false;
-        double d = blockPos2.getX();
-        double e = blockPos2.getY();
-        double f = blockPos2.getZ();
-        List<Entity> list = mc.world.getOtherEntities(null, new Box(d, e, f, d + 1.0D, e + 2.0D, f + 1.0D));
-        //list.removeIf(entity -> entity instanceof ItemEntity); // items will be picked up by the nearby player, crystals can be placed down a lot faster in citying
-        list.removeIf(entity ->
-        {
-            if (!(entity instanceof EndCrystalEntity))
+        }
+
+        Box box = new Box(crystalPos).offset(0.5, 0.0, 0.5).stretch(0.0, 2.0, 0.0);
+        List<Entity> entities = mc.world.getEntitiesByClass(Entity.class, box, e -> !(e instanceof ClientPlayerEntity));
+        for (Entity entity : entities) {
+            if (entity instanceof EndCrystalEntity) {
                 return false;
-            return false;
-        });
-        return list.isEmpty();
+            }
+        }
+        return true;
     }
 
-    public static boolean canPlaceCrystalClient(BlockPos block) {
-        BlockState blockState = mc.world.getBlockState(block);
-        if (!blockState.isOf(Blocks.OBSIDIAN) && !blockState.isOf(Blocks.BEDROCK))
+    public static boolean canPlaceCrystalClient(BlockPos pos) {
+        if (mc.world == null) return false;
+
+        BlockState state = mc.world.getBlockState(pos);
+        if (state.getBlock() != Blocks.OBSIDIAN && state.getBlock() != Blocks.BEDROCK) {
             return false;
-        return canPlaceCrystalClientAssumeObsidian(block);
+        }
+        return canPlaceCrystalClientAssumeObsidian(pos);
     }
 
     public static boolean canPlaceCrystalClientAssumeObsidian(BlockPos block) {
-        BlockPos blockPos2 = block.up();
-        if (!mc.world.isAir(blockPos2))
+        BlockPos crystalPos = block.up();
+        if (!mc.world.isAir(crystalPos))
             return false;
-        double d = blockPos2.getX();
-        double e = blockPos2.getY();
-        double f = blockPos2.getZ();
-        List<Entity> list = mc.world.getOtherEntities(null, new Box(d, e, f, d + 1.0D, e + 2.0D, f + 1.0D));
-        return list.isEmpty();
-    }
-
-    public static boolean canPlaceCrystalClientAssumeObsidian(BlockPos block, Box bb) {
-        BlockPos blockPos2 = block.up();
-        if (!mc.world.isAir(blockPos2))
-            return false;
-        double d = blockPos2.getX();
-        double e = blockPos2.getY();
-        double f = blockPos2.getZ();
-        Box crystalBox = new Box(d, e, f, d + 1.0D, e + 2.0D, f + 1.0D);
-        if (crystalBox.intersects(bb))
-            return false;
-        List<Entity> list = mc.world.getOtherEntities(null, crystalBox);
-        return list.isEmpty();
+        Box box = new Box(crystalPos).offset(0.5, 0.0, 0.5).stretch(0.0, 2.0, 0.0);
+        List<Entity> entities = mc.world.getEntitiesByClass(Entity.class, box, e -> !(e instanceof ClientPlayerEntity));
+        for (Entity entity : entities) {
+            if (entity instanceof EndCrystalEntity) {
+                return false;
+            }
+        }
+        return true;
     }
 }
